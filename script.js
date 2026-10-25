@@ -1491,15 +1491,34 @@ if (heroSection && widgetData.length > 0) {
 
     let quizIdx = 0;
     let quizAnswered = false;
+    let quizScore = 0;
 
     const quizQ       = document.getElementById('swQuizQ');
     const quizOptions = document.getElementById('swQuizOptions');
     const quizFeedback = document.getElementById('swQuizFeedback');
     const quizNext    = document.getElementById('swQuizNext');
+    const quizCount   = document.getElementById('swQuizCount');
+    const quizScoreEl = document.getElementById('swQuizScore');
+    const quizProgress = document.getElementById('swQuizProgress');
+    const quizProgressBar = document.getElementById('swQuizProgressBar');
+    const quizComplete = document.getElementById('swQuizComplete');
+    const quizResult = document.getElementById('swQuizResult');
+    const quizRestart = document.getElementById('swQuizRestart');
 
     const loadQuiz = (idx) => {
         quizAnswered = false;
-        const data = quizData[idx % quizData.length];
+        const data = quizData[idx];
+        if (!data) return;
+        if (quizCount) quizCount.textContent = `Question ${idx + 1} of ${quizData.length}`;
+        if (quizScoreEl) quizScoreEl.textContent = `${quizScore} correct`;
+        if (quizProgress) quizProgress.setAttribute('aria-valuenow', String(idx + 1));
+        if (quizProgressBar) quizProgressBar.style.transform = `scaleX(${(idx + 1) / quizData.length})`;
+        if (quizQ) quizQ.hidden = false;
+        if (quizOptions) quizOptions.hidden = false;
+        if (quizCount) quizCount.parentElement.hidden = false;
+        if (quizProgress) quizProgress.hidden = false;
+        if (quizComplete) quizComplete.hidden = true;
+        if (quizRestart) quizRestart.hidden = true;
         if (quizQ) quizQ.textContent = data.q;
         if (quizFeedback) { quizFeedback.hidden = true; quizFeedback.textContent = ''; quizFeedback.className = 'sw-quiz__feedback'; }
         if (quizNext) quizNext.hidden = true;
@@ -1514,6 +1533,8 @@ if (heroSection && widgetData.length > 0) {
                     if (quizAnswered) return;
                     quizAnswered = true;
                     const isCorrect = i === data.correct;
+                    if (isCorrect) quizScore++;
+                    if (quizScoreEl) quizScoreEl.textContent = `${quizScore} correct`;
                     btn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
                     if (!isCorrect) {
                         quizOptions.querySelectorAll('.sw-quiz__opt')[data.correct].classList.add('is-correct');
@@ -1524,10 +1545,13 @@ if (heroSection && widgetData.length > 0) {
                         quizFeedback.className = `sw-quiz__feedback ${isCorrect ? 'correct' : 'wrong'}`;
                         quizFeedback.hidden = false;
                     }
-                    if (quizNext) quizNext.hidden = false;
+                    if (quizNext) {
+                        quizNext.innerHTML = quizIdx === quizData.length - 1
+                            ? 'See results <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>'
+                            : 'Next question <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+                        quizNext.hidden = false;
+                    }
                     spawnBurst(isCorrect ? '<i class="fa-solid fa-trophy" style="color:#f59e0b"></i>' : '<i class="fa-solid fa-dumbbell" style="color:#6366f1"></i>');
-                    // bump XP
-                    if (isCorrect) bumpStat('swXpNum', 10);
                 });
                 quizOptions.appendChild(btn);
             });
@@ -1535,7 +1559,25 @@ if (heroSection && widgetData.length > 0) {
     };
 
     quizNext && quizNext.addEventListener('click', () => {
-        quizIdx++;
+        if (quizIdx < quizData.length - 1) {
+            quizIdx++;
+            loadQuiz(quizIdx);
+            return;
+        }
+        if (quizQ) quizQ.hidden = true;
+        if (quizOptions) quizOptions.hidden = true;
+        if (quizCount) quizCount.parentElement.hidden = true;
+        if (quizProgress) quizProgress.hidden = true;
+        if (quizFeedback) quizFeedback.hidden = true;
+        quizNext.hidden = true;
+        if (quizResult) quizResult.textContent = `You got ${quizScore} of ${quizData.length} questions right.`;
+        if (quizComplete) quizComplete.hidden = false;
+        if (quizRestart) quizRestart.hidden = false;
+    });
+
+    quizRestart && quizRestart.addEventListener('click', () => {
+        quizIdx = 0;
+        quizScore = 0;
         loadQuiz(quizIdx);
     });
 

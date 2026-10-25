@@ -85,8 +85,8 @@ body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem
                                 <strong><?php echo htmlspecialchars($r['full_name'], ENT_QUOTES); ?></strong>
                             </td>
                             <td>
-                                <div class="progress-bar" style="width:140px;"><span style="width:<?php echo (int)$r['progress']; ?>%"></span></div>
-                                <span style="font-size:12px; color:var(--text-light);"><?php echo (int)$r['progress']; ?>%</span>
+                                <div class="progress-bar" role="progressbar" aria-label="<?php echo htmlspecialchars($r['full_name'], ENT_QUOTES); ?> course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo max(0, min(100, (int)$r['progress'])); ?>" style="width:140px;"><span style="width:<?php echo max(0, min(100, (int)$r['progress'])); ?>%"></span></div>
+                                <span style="font-size:12px; color:var(--text-light);"><?php echo max(0, min(100, (int)$r['progress'])); ?>%</span>
                             </td>
                             <td><?php echo htmlspecialchars(date('M j, Y', strtotime($r['enrolled_at'])), ENT_QUOTES); ?></td>
                             <td><?php echo $r['last_active'] ? htmlspecialchars(date('M j, g:i A', strtotime($r['last_active'])), ENT_QUOTES) : '<span style="color:var(--text-light)">Never</span>'; ?></td>

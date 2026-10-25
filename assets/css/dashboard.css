@@ -1698,6 +1698,166 @@ html[data-theme="dark"] body[data-role="student"][data-page] a,
 html[data-theme="dark"] body[data-role="teacher"][data-page] a { color: #d3c4ff; }
 html[data-theme="dark"] body[data-role="student"][data-page] a:hover,
 html[data-theme="dark"] body[data-role="teacher"][data-page] a:hover { color: #ffffff; }
+
+/* Role dashboard refinements adapted from Dose's information grouping and
+   Dusk's restrained, ruled lists; all surfaces use EduMate's existing tokens. */
+body[data-role="student"][data-page="overview"] .student-assignment-panel {
+    margin-bottom: 20px;
+    padding: 20px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+}
+.student-assignment-heading,
+.teacher-overview-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.student-assignment-heading { margin-bottom: 12px; }
+.student-assignment-heading h2,
+.teacher-overview-heading h2 { margin: 0 0 4px !important; }
+.student-assignment-heading p,
+.teacher-overview-heading p { color: var(--text-secondary); font-size: 13px; }
+.student-assignment-heading .btn { flex: 0 0 auto; }
+.student-assignment-list { border-top: 1px solid var(--border-color); }
+.student-assignment-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+.student-assignment-list li:last-child { border-bottom: 0; }
+.student-assignment-list li > a {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    min-width: 0;
+}
+.student-assignment-title { color: var(--text-primary); font-weight: 600; }
+.student-assignment-course,
+.student-assignment-due { color: var(--text-secondary); font-size: 12px; }
+.student-assignment-due { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+.student-assignment-empty { padding: 16px 4px 4px; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
+body[data-role="student"][data-page="overview"] .progress {
+    height: 7px;
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+}
+body[data-role="student"][data-page="overview"] .progress > span { border-radius: inherit; }
+body[data-role="student"][data-page="overview"] .tile .meta { align-items: center; }
+body[data-role="student"][data-page="overview"] .tile .footer { border-top: 1px solid var(--border-color); }
+body[data-role="student"][data-page="overview"] .cards,
+body[data-role="teacher"][data-page="overview"] .cards {
+    gap: 0;
+    padding: 0;
+    overflow: clip;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-xs);
+}
+body[data-role="student"][data-page="overview"] .card,
+body[data-role="teacher"][data-page="overview"] .card {
+    min-height: 130px;
+    border: 0;
+    border-right: 1px solid var(--border-color);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+body[data-role="student"][data-page="overview"] .card:last-child,
+body[data-role="teacher"][data-page="overview"] .card:last-child { border-right: 0; }
+
+body[data-role="teacher"][data-page="overview"] .teacher-overview-heading {
+    margin-bottom: 16px;
+}
+.teacher-overview-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+body[data-role="teacher"][data-page="overview"] .simple th:last-child,
+body[data-role="teacher"][data-page="overview"] .simple td:last-child { text-align: right; }
+
+body[data-role="teacher"][data-page="assignments"] .panel,
+body[data-role="teacher"][data-page="classes"] .panel,
+body[data-role="teacher"][data-page="courses"] .panel {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+}
+body[data-role="teacher"][data-page="assignments"] table.simple,
+body[data-role="teacher"][data-page="classes"] table.simple { min-width: 720px; }
+body[data-role="teacher"][data-page="assignments"] .modal .body,
+body[data-role="teacher"][data-page="courses"] .modal .body { padding: 24px; }
+body[data-role="teacher"][data-page="assignments"] .modal .form-grid,
+body[data-role="teacher"][data-page="courses"] .modal .form-grid { gap: 18px; }
+body[data-role="teacher"][data-page="assignments"] .form-group label,
+body[data-role="teacher"][data-page="courses"] .form-group label,
+body[data-role="teacher"][data-page="courses"] .panel .form-group label { color: var(--text-secondary); font-weight: 600; }
+body[data-role="teacher"][data-page="assignments"] .form-control,
+body[data-role="teacher"][data-page="courses"] .form-control {
+    border-color: var(--border-strong);
+    background: var(--bg-card);
+}
+body[data-role="teacher"][data-page="assignments"] .form-control:focus,
+body[data-role="teacher"][data-page="courses"] .form-control:focus {
+    border-color: var(--gradient-primary);
+    box-shadow: 0 0 0 3px var(--border-color);
+}
+body[data-role="teacher"][data-page="assignments"] .activity,
+body[data-role="teacher"][data-page="assignments"] .item { min-width: 0; }
+body[data-role="teacher"][data-page="assignments"] .panel-grid { align-items: start; }
+body[data-role="teacher"][data-page="classes"] .progress-bar { display: inline-block; vertical-align: middle; border-radius: 999px; overflow: hidden; }
+body[data-role="teacher"][data-page="classes"] .progress-bar > span { border-radius: inherit; }
+body[data-role="teacher"][data-page="courses"] .tile .footer { border-top: 1px solid var(--border-color); }
+body[data-role="teacher"][data-page="courses"] .form-grid,
+body[data-role="teacher"][data-page="courses"] .panel > form .form-grid { gap: 18px; }
+body[data-role="teacher"][data-page="courses"] .panel > form { max-width: 980px; }
+body[data-role="teacher"][data-page="courses"] .panel > form .form-control { min-height: 48px; }
+body[data-role="teacher"][data-page="courses"] .panel > form textarea.form-control { min-height: 120px; }
+body[data-role="student"][data-page] .nav-group .label,
+body[data-role="teacher"][data-page] .nav-group .label {
+    padding: 12px 12px 5px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+}
+body[data-role="student"][data-page] .sidebar .nav-item,
+body[data-role="teacher"][data-page] .sidebar .nav-item {
+    border: 1px solid transparent;
+    transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+body[data-role="student"][data-page] .sidebar .nav-item:hover,
+body[data-role="teacher"][data-page] .sidebar .nav-item:hover {
+    border-color: var(--border-color);
+}
+body[data-role="student"][data-page] .sidebar .nav-item.active,
+body[data-role="teacher"][data-page] .sidebar .nav-item.active {
+    border-color: var(--border-color);
+}
+
+@media (max-width: 760px) {
+    body[data-role="student"][data-page="overview"] .card:nth-child(2n),
+    body[data-role="teacher"][data-page="overview"] .card:nth-child(2n) { border-right: 0; }
+    body[data-role="student"][data-page="overview"] .card:nth-child(-n+2),
+    body[data-role="teacher"][data-page="overview"] .card:nth-child(-n+2) { border-bottom: 1px solid var(--border-color); }
+    .student-assignment-heading,
+    .teacher-overview-heading { align-items: flex-start; flex-direction: column; }
+    .teacher-overview-actions { justify-content: flex-start; }
+    .student-assignment-list li { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+@media (max-width: 520px) {
+    body[data-role="student"][data-page="overview"] .card,
+    body[data-role="teacher"][data-page="overview"] .card { border-right: 0; border-bottom: 1px solid var(--border-color); }
+    body[data-role="student"][data-page="overview"] .card:last-child,
+    body[data-role="teacher"][data-page="overview"] .card:last-child { border-bottom: 0; }
+}
 html[data-theme="dark"] body[data-role="student"][data-page] .btn-primary,
 html[data-theme="dark"] body[data-role="teacher"][data-page] .btn-primary { background: var(--gradient-primary); color: var(--icon-on-accent); }
 html, body {

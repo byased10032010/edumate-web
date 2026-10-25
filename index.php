@@ -25,8 +25,9 @@ if (isset($_SESSION['user_id'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=contrast-2">
+    <link rel="stylesheet" href="assets/css/interface-refinement.css?v=1">
     <style>
         /* Homepage refinements: keep the existing EduMate palette and type system. */
         .hero {
@@ -79,9 +80,47 @@ if (isset($_SESSION['user_id'])) {
             .hero-actions { align-items: stretch; }
             .hero-actions .play-btn { width: 100%; }
         }
+        /* Dose-inspired task grouping and Dusk-inspired restrained emphasis,
+           expressed through EduMate's existing palette and type. */
+        .hero { align-items: start; padding-block: clamp(3rem, 5vw, 4.5rem); }
+        .hero-content { padding-top: clamp(.5rem, 2vw, 1.5rem); }
+        .sw-wrapper { max-width: 660px; }
+        .sw-decor, .sw-dot, .sw-orb, .sw-topbar__avatars, .sw-topbar__badge, .sw-stats { display: none !important; }
+        .study-widget { border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-soft); }
+        .study-widget:hover { transform:none; box-shadow: var(--shadow-soft); }
+        .sw-topbar { padding: 1.15rem 1.3rem; border:0; border-bottom:1px solid var(--line); border-radius:0; background:transparent; }
+        .sw-topbar__label { font-size: .95rem; }
+        .sw-tabs { justify-content: flex-start; gap:1rem; padding:0 1.1rem; border:0; border-bottom:1px solid var(--line); border-radius:0; background:transparent; }
+        .sw-tab { flex:0 0 auto; min-height:46px; padding-inline:.2rem; border-radius:0; border-bottom:2px solid transparent; }
+        .sw-tab:hover:not(.active) { transform:none; }
+        .sw-tab.active { color:var(--violet); background:transparent; border-bottom-color:var(--violet); transform:none; }
+        #studyWidget [hidden] { display:none !important; }
+        .sw-panel { padding: 1.25rem; }
+        .sw-quiz__session { display:flex; justify-content:space-between; gap:1rem; margin:0 0 .85rem; color:var(--muted); font-size:.82rem; font-weight:600; }
+        .sw-quiz__progress { height:5px; overflow:hidden; border-radius:var(--radius-pill); background:var(--line); margin-bottom:1.2rem; }
+        .sw-quiz__progress span { display:block; height:100%; border-radius:inherit; background:var(--violet); transition:transform .2s ease; transform-origin:left; }
+        .sw-quiz__q { font-size:1.15rem; line-height:1.45; }
+        .sw-quiz__options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+        .sw-quiz__opt { min-height:48px; text-align:left; }
+        .sw-quiz__opt:focus-visible, .sw-tab:focus-visible, .sw-quiz__next:focus-visible, .sw-quiz__restart:focus-visible { outline:3px solid var(--violet); outline-offset:3px; }
+        .sw-quiz__feedback { margin-top:.9rem; }
+        .sw-quiz__next, .sw-quiz__restart { margin-top:.9rem; }
+        .sw-quiz__complete { padding:1.2rem; border:1px solid var(--line); border-radius:16px; background:var(--bg-2); color:var(--ink); }
+        .sw-quiz__complete strong { display:block; margin-bottom:.4rem; font-size:1.2rem; }
+        .boards-grid { align-items:stretch; }
+        .board-card { border:1px solid var(--line); box-shadow:var(--shadow-soft); }
+        .features-hero { padding-block:2rem; border-block:1px solid var(--line); }
+        .features-hero-actions { margin-top:1.5rem !important; }
+        @media (max-width: 560px) {
+            .sw-panel { padding:1rem; }
+            .sw-quiz__options { grid-template-columns:minmax(0,1fr); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .sw-quiz__progress span { transition:none; }
+        }
     </style>
 </head>
-<body>
+<body class="homepage">
     <!-- Page loader -->
     <div class="page-loader" id="pageLoader" aria-hidden="true">
         <div class="page-loader-inner">
@@ -193,51 +232,24 @@ if (isset($_SESSION['user_id'])) {
                     <a href="register.php" class="play-btn play-btn--coral"><i class="fa-solid fa-rocket"></i><span>Start studying free</span></a>
                     <a href="#features" class="play-btn play-btn--ghost"><i class="fa-solid fa-circle-play"></i><span>See how it works</span></a>
                 </div>
-                <div class="streak-row">
-                    <span class="is-fire" title="Mon"></span><span class="is-fire" title="Tue"></span><span class="is-fire" title="Wed"></span><span class="is-fire" title="Thu"></span><span class="is-on" title="Today"></span><span title="Sat"></span><span title="Sun"></span>
-                    <em style="font-style:normal; color:var(--muted); font-size:0.78rem; font-weight:600; margin-left:6px;">5 day streak <i class="fa-solid fa-fire" style="color:var(--coral);"></i></em>
-                </div>
             </div>
             <!-- Study Widget -->
             <div class="sw-wrapper">
-                <div class="sw-decor sw-decor--tl" aria-hidden="true"><span><i class="fa-solid fa-book" style="color:var(--sky, #0ea5e9);"></i></span> CBSE</div>
-                <div class="sw-decor sw-decor--tr" aria-hidden="true"><span><i class="fa-solid fa-fire" style="color:var(--coral);"></i></span> 5-day streak</div>
-                <div class="sw-decor sw-decor--bl" aria-hidden="true"><span><i class="fa-solid fa-star" style="color:var(--amber);"></i></span> 1,240 XP</div>
-                <div class="sw-decor sw-decor--br" aria-hidden="true"><span><i class="fa-solid fa-stopwatch" style="color:var(--teal);"></i></span> Focus mode</div>
-                <div class="sw-decor sw-decor--mid-l" aria-hidden="true"><span><i class="fa-solid fa-pen-nib" style="color:var(--violet);"></i></span> Quiz time!</div>
-                <div class="sw-decor sw-decor--mid-r" aria-hidden="true"><span><i class="fa-solid fa-lightbulb" style="color:var(--green);"></i></span> New card</div>
-                <span class="sw-dot sw-dot--1"></span>
-                <span class="sw-dot sw-dot--2"></span>
-                <span class="sw-dot sw-dot--3"></span>
-                <span class="sw-dot sw-dot--4"></span>
-
                 <div class="study-widget" id="studyWidget" aria-label="Interactive study dashboard">
-                    <span class="sw-orb sw-orb--violet"></span>
-                    <span class="sw-orb sw-orb--coral"></span>
-                    <span class="sw-orb sw-orb--teal"></span>
-
                     <div class="sw-topbar">
                         <div class="sw-topbar__left">
-                            <span class="sw-live-dot"></span>
-                            <span class="sw-topbar__label">EduMate Study Room</span>
+                            <span class="sw-topbar__label">Try a quick question</span>
                         </div>
-                        <div class="sw-topbar__avatars">
-                            <span class="sw-av" style="background:var(--violet);">A</span>
-                            <span class="sw-av" style="background:var(--coral);">M</span>
-                            <span class="sw-av" style="background:var(--teal);">R</span>
-                            <span class="sw-av sw-av--more">+9</span>
-                        </div>
-                        <span class="sw-topbar__badge"><i class="fa-solid fa-circle-dot"></i> 12 online</span>
                     </div>
 
                     <div class="sw-tabs" role="tablist">
-                        <button class="sw-tab active" data-sw-tab="flashcard" role="tab" aria-selected="true"><i class="fa-solid fa-layer-group"></i> Flashcard</button>
-                        <button class="sw-tab" data-sw-tab="quiz" role="tab" aria-selected="false"><i class="fa-solid fa-brain"></i> Quiz</button>
-                        <button class="sw-tab" data-sw-tab="focus" role="tab" aria-selected="false"><i class="fa-solid fa-stopwatch"></i> Focus</button>
+                        <button class="sw-tab active" data-sw-tab="quiz" id="swTabQuiz" aria-controls="sw-panel-quiz" role="tab" aria-selected="true"><i class="fa-solid fa-brain" aria-hidden="true"></i> Questions</button>
+                        <button class="sw-tab" data-sw-tab="flashcard" id="swTabFlashcard" aria-controls="sw-panel-flashcard" role="tab" aria-selected="false"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Flashcards</button>
+                        <button class="sw-tab" data-sw-tab="focus" id="swTabFocus" aria-controls="sw-panel-focus" role="tab" aria-selected="false"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i> Focus</button>
                     </div>
 
                     <!-- Flashcard Panel -->
-                    <div class="sw-panel" id="sw-panel-flashcard">
+                    <div class="sw-panel" id="sw-panel-flashcard" role="tabpanel" aria-labelledby="swTabFlashcard" hidden>
                         <div class="sw-flashcard" id="swFlashcard" tabindex="0" aria-label="Flip flashcard">
                             <div class="sw-flashcard__inner">
                                 <div class="sw-flashcard__face sw-flashcard__face--front">
@@ -263,7 +275,9 @@ if (isset($_SESSION['user_id'])) {
                     </div>
 
                     <!-- Quiz Panel -->
-                    <div class="sw-panel" id="sw-panel-quiz" hidden>
+                    <div class="sw-panel" id="sw-panel-quiz" role="tabpanel" aria-labelledby="swTabQuiz">
+                        <div class="sw-quiz__session"><span id="swQuizCount">Question 1 of 3</span><span id="swQuizScore">0 correct</span></div>
+                        <div class="sw-quiz__progress" id="swQuizProgress" role="progressbar" aria-label="Question session progress" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><span id="swQuizProgressBar" style="transform:scaleX(.3333)"></span></div>
                         <p class="sw-quiz__q" id="swQuizQ">Which board follows the NCERT syllabus?</p>
                         <div class="sw-quiz__options" id="swQuizOptions">
                             <button class="sw-quiz__opt" data-correct="false">ICSE</button>
@@ -273,10 +287,12 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="sw-quiz__feedback" id="swQuizFeedback" hidden></div>
                         <button class="sw-quiz__next play-btn play-btn--ghost" id="swQuizNext" hidden>Next Question <i class="fa-solid fa-arrow-right"></i></button>
+                        <div class="sw-quiz__complete" id="swQuizComplete" hidden aria-live="polite"><strong>Session complete</strong><span id="swQuizResult"></span></div>
+                        <button class="sw-quiz__restart play-btn play-btn--ghost" id="swQuizRestart" hidden>Try again</button>
                     </div>
 
                     <!-- Focus Panel -->
-                    <div class="sw-panel" id="sw-panel-focus" hidden>
+                    <div class="sw-panel" id="sw-panel-focus" role="tabpanel" aria-labelledby="swTabFocus" hidden>
                         <div class="sw-pomodoro">
                             <svg class="sw-pom-ring" viewBox="0 0 120 120" aria-hidden="true">
                                 <circle class="sw-pom-track" cx="60" cy="60" r="52"/>
@@ -294,25 +310,6 @@ if (isset($_SESSION['user_id'])) {
                         <div class="sw-pom-sessions">
                             <span id="swPomSessionDots"></span>
                             <em>Session <span id="swPomSessionNum">1</span> of 4</em>
-                        </div>
-                    </div>
-
-                    <!-- Bottom stats -->
-                    <div class="sw-stats">
-                        <div class="sw-stat">
-                            <span class="sw-stat__emoji" style="color:var(--coral);"><i class="fa-solid fa-fire"></i></span>
-                            <strong class="sw-stat__num" id="swStreakNum">5</strong>
-                            <span class="sw-stat__label">day streak</span>
-                        </div>
-                        <div class="sw-stat">
-                            <span class="sw-stat__emoji" style="color:var(--amber);"><i class="fa-solid fa-star"></i></span>
-                            <strong class="sw-stat__num" id="swXpNum">1240</strong>
-                            <span class="sw-stat__label">XP earned</span>
-                        </div>
-                        <div class="sw-stat">
-                            <span class="sw-stat__emoji" style="color:var(--teal);"><i class="fa-solid fa-book-open"></i></span>
-                            <strong class="sw-stat__num" id="swCardsNum">48</strong>
-                            <span class="sw-stat__label">cards done</span>
                         </div>
                     </div>
 
@@ -550,13 +547,12 @@ if (isset($_SESSION['user_id'])) {
                     <span class="logo-wordmark footer-logo__wordmark">EduMate</span>
                 </a>
                 <p class="footer-tagline">Calm, secure study chat for friends, communities, and the people you actually learn with.</p>
-                <div class="footer-social"><a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a><a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a><a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                <div class="footer-social"><a href="#" aria-label="X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a><a href="#" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a><a href="#" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></div>
             </div>
             <nav class="footer-cols">
-                <div class="footer-col"><h4>Product</h4><ul><li><a href="#features">Features</a></li><li><a href="#subscriptions">Subscriptions</a></li><li><a href="#">Download apps</a></li><li><a href="#">What's new</a></li></ul></div>
-                <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About us</a></li><li><a href="#">Careers <span class="footer-tag">Hiring</span></a></li><li><a href="#">Press kit</a></li><li><a href="#">Contact</a></li></ul></div>
-                <div class="footer-col"><h4>Resources</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Community forum</a></li><li><a href="#">Developer API</a></li><li><a href="#">Status page</a></li></ul></div>
-                <div class="footer-col"><h4>Legal</h4><ul><li><a href="#privacy">Privacy policy</a></li><li><a href="#">Terms of service</a></li><li><a href="#">Cookie settings</a></li><li><a href="#">GDPR</a></li></ul></div>
+                <div class="footer-col"><h4>Explore</h4><ul><li><a href="#boards">Study boards</a></li><li><a href="#features">Features</a></li><li><a href="#faq">FAQs</a></li></ul></div>
+                <div class="footer-col"><h4>Your account</h4><ul><li><a href="register.php">Create an account</a></li><li><a href="login.php">Sign in</a></li></ul></div>
+                <div class="footer-col"><h4>Get help</h4><ul><li><a href="#faq">Browse FAQs</a></li><li><a href="#faq">Find answers</a></li></ul></div>
             </nav>
         </div>
         <div class="footer-bottom"><span class="footer-copy">© 2026 EduMate Labs Inc. · Made with care for clearer conversations.</span><div class="footer-status"><span class="footer-status-dot"></span> All systems operational</div></div>
@@ -564,6 +560,6 @@ if (isset($_SESSION['user_id'])) {
 
     <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><span class="scroll-top-icon"><i class="fa-solid fa-arrow-up"></i></span></button>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=question-session-1"></script>
 </body>
 </html>

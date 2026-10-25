@@ -88,7 +88,16 @@ body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem
 
 <div class="panel-grid">
     <section class="panel">
-        <h2>Your courses</h2>
+        <div class="teacher-overview-heading">
+            <div>
+                <h2>Your courses</h2>
+                <p>Recent courses and enrollment at a glance.</p>
+            </div>
+            <div class="teacher-overview-actions">
+                <a class="btn btn-ghost btn-sm" href="assignments.php">Review assignments</a>
+                <a class="btn btn-primary btn-sm" href="courses.php"><ion-icon name="add-outline" aria-hidden="true"></ion-icon> Manage courses</a>
+            </div>
+        </div>
         <?php
         $myCourses = $pdo->prepare(
             'SELECT c.*, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id) AS enrolled

@@ -219,7 +219,8 @@ function render_dashboard_header(
     echo '  <link rel="preconnect" href="https://fonts.googleapis.com">', "\n";
     echo '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>', "\n";
     echo '  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">', "\n";
-    echo '  <link rel="stylesheet" href="../assets/css/dashboard.css?v=9">', "\n";
+    echo '  <link rel="stylesheet" href="../assets/css/dashboard.css?v=10">', "\n";
+    echo '  <link rel="stylesheet" href="../assets/css/interface-refinement.css?v=1">', "\n";
     echo '  <link rel="stylesheet" href="../assets/css/theme-switch.css?v=3">', "\n";
     echo '  <link rel="stylesheet" href="../assets/css/custom-select.css?v=2">', "\n";
     echo '  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">', "\n";
@@ -258,9 +259,10 @@ function render_dashboard_header(
 
         $href   = $base . $item['href'];
         $active = $key === $activeKey ? ' active' : '';
+        $current = $key === $activeKey ? ' aria-current="page"' : '';
         $icon   = $item['icon'];
         $label  = $item['label'];
-        echo '      <a class="nav-item' . $active . '" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">', "\n";
+        echo '      <a class="nav-item' . $active . '" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $current . '>', "\n";
         echo '        <ion-icon name="' . htmlspecialchars($icon, ENT_QUOTES, 'UTF-8') . '"></ion-icon>', "\n";
         echo '        <span>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</span>', "\n";
         echo '      </a>', "\n";

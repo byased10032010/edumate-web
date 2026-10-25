@@ -51,6 +51,20 @@ $coursesStmt = $pdo->prepare(
 $coursesStmt->execute([':u' => $uid]);
 $courses = $coursesStmt->fetchAll();
 
+// Next assignments from courses the student is enrolled in.
+$pendingAssignmentsStmt = $pdo->prepare(
+    'SELECT a.id, a.title, a.due_date, c.title AS course_title
+       FROM assignments a
+       JOIN courses c ON c.id = a.course_id
+       JOIN enrollments e ON e.course_id = c.id AND e.student_id = :u
+       LEFT JOIN submissions s ON s.assignment_id = a.id AND s.student_id = :u2
+      WHERE s.id IS NULL
+      ORDER BY CASE WHEN a.due_date IS NULL THEN 1 ELSE 0 END, a.due_date ASC, a.created_at DESC
+      LIMIT 4'
+);
+$pendingAssignmentsStmt->execute([':u' => $uid, ':u2' => $uid]);
+$pendingAssignments = $pendingAssignmentsStmt->fetchAll();
+
 // Recent activity (last 6 events for the user)
 $actStmt = $pdo->prepare(
     'SELECT icon, title, detail, created_at
@@ -91,6 +105,33 @@ body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem
 @media(max-width:760px){body[data-page] .main{padding:1rem 1rem 2rem} body[data-page] .panel-grid{grid-template-columns:minmax(0,1fr)} body[data-page] .panel-grid>*{min-width:0} body[data-page] .panel{min-width:0;overflow-x:auto} body[data-page] .cards{grid-template-columns:repeat(2,minmax(0,1fr))} body[data-page] table.simple{display:table;width:max-content;min-width:100%}}
 @media(max-width:480px){body[data-page] .cards{grid-template-columns:minmax(0,1fr)} body[data-page] .panel{padding:1rem}}
 </style>
+
+<section class="panel student-assignment-panel" aria-labelledby="studentAssignmentsHeading">
+    <div class="student-assignment-heading">
+        <div>
+            <h2 id="studentAssignmentsHeading">Next assignments</h2>
+            <p>Work posted to your enrolled courses.</p>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="assignments.php">All assignments <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></a>
+    </div>
+    <?php if (empty($pendingAssignments)): ?>
+        <p class="student-assignment-empty">You’re caught up on assignment submissions.</p>
+    <?php else: ?>
+        <ul class="student-assignment-list">
+            <?php foreach ($pendingAssignments as $assignment): ?>
+                <li>
+                    <a href="assignments.php?id=<?php echo (int)$assignment['id']; ?>">
+                        <span class="student-assignment-title"><?php echo htmlspecialchars($assignment['title'], ENT_QUOTES); ?></span>
+                        <span class="student-assignment-course"><?php echo htmlspecialchars($assignment['course_title'], ENT_QUOTES); ?></span>
+                    </a>
+                    <span class="student-assignment-due">
+                        <?php echo $assignment['due_date'] ? 'Due ' . htmlspecialchars(date('M j', strtotime($assignment['due_date'])), ENT_QUOTES) : 'No due date'; ?>
+                    </span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</section>
 
 <section class="cards">
     <div class="card">
@@ -164,9 +205,9 @@ body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem
                         <div class="body">
                             <h3><?php echo htmlspecialchars($c['title'], ENT_QUOTES); ?></h3>
                             <p><?php echo htmlspecialchars($c['description'], ENT_QUOTES); ?></p>
-                            <div class="progress"><span style="width: <?php echo (int)$c['progress']; ?>%"></span></div>
+                            <div class="progress" role="progressbar" aria-label="<?php echo htmlspecialchars($c['title'], ENT_QUOTES); ?> course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo max(0, min(100, (int)$c['progress'])); ?>"><span style="width: <?php echo max(0, min(100, (int)$c['progress'])); ?>%"></span></div>
                             <div class="meta">
-                                <span><ion-icon name="cellular-outline"></ion-icon> <?php echo (int)$c['progress']; ?>% complete</span>
+                                <span><ion-icon name="cellular-outline"></ion-icon> <?php echo max(0, min(100, (int)$c['progress'])); ?>% complete</span>
                                 <?php if (!empty($c['last_active'])): ?>
                                     <span><ion-icon name="time-outline"></ion-icon> <?php echo htmlspecialchars(date('M j', strtotime($c['last_active'])), ENT_QUOTES); ?></span>
                                 <?php endif; ?>
