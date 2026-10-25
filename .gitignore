@@ -19,6 +19,13 @@ config/db.php
 *.bak
 !database.sql
 
+# Scripts
+*.ps1
+*.bat
+*.sh
+*.cmd
+*.vbs
+
 # Windows and editor files
 Thumbs.db
 .DS_Store
