@@ -176,7 +176,7 @@ render_dashboard_header(
     <div style="display:flex; flex-direction:column; gap:20px;">
         <!-- Notices Bulletin -->
         <section class="panel">
-            <h3>Course Notices <span class="sub">📢</span></h3>
+            <h3>Course Notices <span class="sub"><i class="fa-solid fa-bullhorn"></i></span></h3>
             <?php if (empty($notices)): ?>
                 <p style="font-size:12px; color:var(--text-light); font-style:italic;">No active announcements for this subject.</p>
             <?php else: ?>
@@ -195,7 +195,7 @@ render_dashboard_header(
 
         <!-- DPPs & DPP Questions -->
         <section class="panel">
-            <h3>DPPs &amp; Practice Problems <span class="sub">📝</span></h3>
+            <h3>DPPs &amp; Practice Problems <span class="sub"><i class="fa-solid fa-pen-to-square"></i></span></h3>
             <?php if (empty($dpps)): ?>
                 <p style="font-size:12px; color:var(--text-light); font-style:italic;">No daily practice papers uploaded for this subject yet.</p>
             <?php else: ?>

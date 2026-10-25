@@ -1314,7 +1314,7 @@ body {
     <div class="chatbot-messages" id="chatbotMessages">
         <div class="message received">
             <div class="message-content">
-                <strong>👋 Hello! I'm CodeSphere AI Assistant</strong><br><br>
+                <strong><i class="fas fa-hand-paper" style="color:#f59e0b; margin-right:4px;"></i> Hello! I'm CodeSphere AI Assistant</strong><br><br>
                 I can help you with:<br>
                 • Code explanations & debugging<br>
                 • Repository management<br>
@@ -2212,7 +2212,7 @@ clearChatbotChat.addEventListener('click', () => {
         chatbotMessages.innerHTML = `
             <div class="message received">
                 <div class="message-content">
-                    <strong>👋 Hello! I'm CodeSphere AI Assistant</strong><br><br>
+                    <strong><i class="fas fa-hand-paper" style="color:#f59e0b; margin-right:4px;"></i> Hello! I'm CodeSphere AI Assistant</strong><br><br>
                     I can help you with:<br>
                     • Code explanations & debugging<br>
                     • Repository management<br>

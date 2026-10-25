@@ -1435,7 +1435,7 @@ if (heroSection && widgetData.length > 0) {
         if (!burstLayer) return;
         const el = document.createElement('span');
         el.className = 'sw-burst-emoji';
-        el.textContent = emoji;
+        el.innerHTML = emoji;
         const x = 30 + Math.random() * 40;
         const y = 30 + Math.random() * 40;
         const dx = (Math.random() - 0.5) * 60;
@@ -1448,7 +1448,7 @@ if (heroSection && widgetData.length > 0) {
         flashcard.addEventListener('click', () => {
             isFlipped = !isFlipped;
             flashcard.classList.toggle('is-flipped', isFlipped);
-            if (isFlipped) spawnBurst(['✨','🎉','💡','🔥','⭐'][Math.floor(Math.random() * 5)]);
+            if (isFlipped) spawnBurst(['<i class="fa-solid fa-wand-magic-sparkles" style="color:#fbbf24"></i>','<i class="fa-solid fa-award" style="color:#f43f5e"></i>','<i class="fa-solid fa-lightbulb" style="color:#f59e0b"></i>','<i class="fa-solid fa-fire" style="color:#f97316"></i>','<i class="fa-solid fa-star" style="color:#eab308"></i>'][Math.floor(Math.random() * 5)]);
         });
         flashcard.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flashcard.click(); }
@@ -1462,7 +1462,7 @@ if (heroSection && widgetData.length > 0) {
     fcNext && fcNext.addEventListener('click', () => {
         cardIndex = (cardIndex + 1) % cards.length;
         loadCard(cardIndex);
-        spawnBurst('📚');
+        spawnBurst('<i class="fa-solid fa-book-open" style="color:#3b82f6"></i>');
     });
 
     loadCard(0);
@@ -1473,19 +1473,19 @@ if (heroSection && widgetData.length > 0) {
             q: "Which board follows the NCERT syllabus?",
             opts: ["ICSE", "CBSE", "WBBSE", "Maharashtra Board"],
             correct: 1,
-            feedback: { correct: "✅ Correct! CBSE is aligned with NCERT.", wrong: "❌ Not quite — CBSE follows NCERT." }
+            feedback: { correct: '<i class="fa-solid fa-circle-check" style="color:var(--green); margin-right:4px;"></i> Correct! CBSE is aligned with NCERT.', wrong: '<i class="fa-solid fa-circle-xmark" style="color:var(--coral); margin-right:4px;"></i> Not quite — CBSE follows NCERT.' }
         },
         {
             q: "Madhyamik is the Class 10 exam of which board?",
             opts: ["CBSE", "ICSE", "WBBSE", "Maharashtra Board"],
             correct: 2,
-            feedback: { correct: "✅ Right! Madhyamik is WBBSE's Class 10 exam.", wrong: "❌ Madhyamik belongs to WBBSE." }
+            feedback: { correct: '<i class="fa-solid fa-circle-check" style="color:var(--green); margin-right:4px;"></i> Right! Madhyamik is WBBSE\'s Class 10 exam.', wrong: '<i class="fa-solid fa-circle-xmark" style="color:var(--coral); margin-right:4px;"></i> Madhyamik belongs to WBBSE.' }
         },
         {
             q: "SSC and HSC exams are conducted by which board?",
             opts: ["CBSE", "ICSE", "WBBSE", "Maharashtra Board"],
             correct: 3,
-            feedback: { correct: "✅ Correct! Maharashtra Board conducts SSC & HSC.", wrong: "❌ SSC/HSC are Maharashtra Board exams." }
+            feedback: { correct: '<i class="fa-solid fa-circle-check" style="color:var(--green); margin-right:4px;"></i> Correct! Maharashtra Board conducts SSC & HSC.', wrong: '<i class="fa-solid fa-circle-xmark" style="color:var(--coral); margin-right:4px;"></i> SSC/HSC are Maharashtra Board exams.' }
         },
     ];
 
@@ -1520,12 +1520,12 @@ if (heroSection && widgetData.length > 0) {
                     }
                     quizOptions.querySelectorAll('.sw-quiz__opt').forEach(b => b.disabled = true);
                     if (quizFeedback) {
-                        quizFeedback.textContent = isCorrect ? data.feedback.correct : data.feedback.wrong;
+                        quizFeedback.innerHTML = isCorrect ? data.feedback.correct : data.feedback.wrong;
                         quizFeedback.className = `sw-quiz__feedback ${isCorrect ? 'correct' : 'wrong'}`;
                         quizFeedback.hidden = false;
                     }
                     if (quizNext) quizNext.hidden = false;
-                    spawnBurst(isCorrect ? '🎉' : '💪');
+                    spawnBurst(isCorrect ? '<i class="fa-solid fa-trophy" style="color:#f59e0b"></i>' : '<i class="fa-solid fa-dumbbell" style="color:#6366f1"></i>');
                     // bump XP
                     if (isCorrect) bumpStat('swXpNum', 10);
                 });
@@ -1607,7 +1607,7 @@ if (heroSection && widgetData.length > 0) {
             updatePomUI();
             if (pomSecs <= 0) {
                 stopPom();
-                spawnBurst(pomIsBreak ? '☕' : '🍅');
+                spawnBurst(pomIsBreak ? '<i class="fa-solid fa-mug-hot" style="color:var(--teal)"></i>' : '<i class="fa-solid fa-bullseye" style="color:var(--coral)"></i>');
                 if (!pomIsBreak) {
                     bumpStat('swXpNum', 25);
                     pomSession = Math.min(pomSession + 1, TOTAL_SESSIONS + 1);

@@ -744,16 +744,16 @@ if ($quizId > 0) {
                 $scoreBadgeText = $pct . '% · Review Needed';
                 if ($pct === 100) {
                     $scoreBadgeClass = 'perfect';
-                    $scoreBadgeText = '🏆 100% Perfect';
+                    $scoreBadgeText = '<ion-icon name="trophy-outline"></ion-icon> 100% Perfect';
                 } elseif ($pct >= 80) {
                     $scoreBadgeClass = 'high';
-                    $scoreBadgeText = '⭐ ' . $pct . '% High Mastery';
+                    $scoreBadgeText = '<ion-icon name="star-outline"></ion-icon> ' . $pct . '% High Mastery';
                 } elseif ($pct >= 60) {
                     $scoreBadgeClass = 'passed';
-                    $scoreBadgeText = '🎯 ' . $pct . '% Passed';
+                    $scoreBadgeText = '<ion-icon name="checkmark-circle-outline"></ion-icon> ' . $pct . '% Passed';
                 } elseif ($pct >= 40) {
                     $scoreBadgeClass = 'warning';
-                    $scoreBadgeText = '⚠️ ' . $pct . '% Needs Work';
+                    $scoreBadgeText = '<ion-icon name="alert-circle-outline"></ion-icon> ' . $pct . '% Needs Work';
                 }
 
                 $resp = json_decode((string)($r['responses'] ?? '[]'), true) ?? [];
@@ -1101,13 +1101,13 @@ render_dashboard_header(
                         </td>
                         <td>
                             <?php if ($pct === 100): ?>
-                                <span class="score-badge perfect" style="font-size:11px; padding:3px 9px;">🏆 100%</span>
+                                <span class="score-badge perfect" style="font-size:11px; padding:3px 9px;"><ion-icon name="trophy-outline"></ion-icon> 100%</span>
                             <?php elseif ($pct >= 75): ?>
-                                <span class="score-badge high" style="font-size:11px; padding:3px 9px;">⭐ <?php echo $pct; ?>%</span>
+                                <span class="score-badge high" style="font-size:11px; padding:3px 9px;"><ion-icon name="star-outline"></ion-icon> <?php echo $pct; ?>%</span>
                             <?php elseif ($pct >= 50): ?>
-                                <span class="score-badge passed" style="font-size:11px; padding:3px 9px;">🎯 <?php echo $pct; ?>%</span>
+                                <span class="score-badge passed" style="font-size:11px; padding:3px 9px;"><ion-icon name="checkmark-circle-outline"></ion-icon> <?php echo $pct; ?>%</span>
                             <?php else: ?>
-                                <span class="score-badge low" style="font-size:11px; padding:3px 9px;">⚠️ <?php echo $pct; ?>%</span>
+                                <span class="score-badge low" style="font-size:11px; padding:3px 9px;"><ion-icon name="alert-circle-outline"></ion-icon> <?php echo $pct; ?>%</span>
                             <?php endif; ?>
                         </td>
                         <td style="text-align:right;">

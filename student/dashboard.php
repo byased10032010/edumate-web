@@ -250,9 +250,9 @@ render_dashboard_header(
                 <!-- Right: Compact Presets, Slider & Controls -->
                 <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0;">
                     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                        <button type="button" class="timer-mode-pill active" data-time="1500" data-label="Focus">🎯 25m</button>
-                        <button type="button" class="timer-mode-pill" data-time="300" data-label="Break">☕ 5m</button>
-                        <button type="button" class="timer-mode-pill" data-time="900" data-label="Break">🌴 15m</button>
+                        <button type="button" class="timer-mode-pill active" data-time="1500" data-label="Focus"><i class="fa-solid fa-bullseye"></i> 25m</button>
+                        <button type="button" class="timer-mode-pill" data-time="300" data-label="Break"><i class="fa-solid fa-mug-hot"></i> 5m</button>
+                        <button type="button" class="timer-mode-pill" data-time="900" data-label="Break"><i class="fa-solid fa-umbrella-beach"></i> 15m</button>
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px; background: var(--bg-secondary); padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border-color);">
@@ -367,11 +367,11 @@ render_dashboard_header(
                             localStorage.setItem(todayKey, focusSessions);
                             if (sessionsCountEl) sessionsCountEl.textContent = focusSessions;
                             if (window.showToast) {
-                                window.showToast('Great job! Focus session complete. Take a break!', 'success', 'Session Complete 🎉');
+                                window.showToast('Great job! Focus session complete. Take a break!', 'success', 'Session Complete');
                             }
                         } else {
                             if (window.showToast) {
-                                window.showToast('Break time is over! Ready for your next focus session?', 'info', 'Break Ended ⏰');
+                                window.showToast('Break time is over! Ready for your next focus session?', 'info', 'Break Ended');
                             }
                         }
                     }

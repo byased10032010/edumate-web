@@ -5745,3 +5745,27 @@ html[data-theme="dark"] .scroll-top-ring-track { stroke: var(--line); opacity: 1
 @media (prefers-reduced-motion: reduce) {
     .sw-decor, .sw-dot { animation: none !important; }
 }
+
+/* Icon enhancements for replaced emojis */
+.study-tab i,
+.sw-tab i {
+    margin-right: 6px;
+}
+.mobile-drawer-links a i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+.eyebrow i {
+    margin-right: 5px;
+}
+.board-emoji i {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+.board-card:hover .board-emoji i {
+    transform: scale(1.1) rotate(5deg);
+}
+.sw-burst-emoji i {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}

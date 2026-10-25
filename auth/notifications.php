@@ -1070,7 +1070,7 @@ if (isset($notifConn)) $notifConn->close();
                 z-index: 10000;
                 animation: slideInRight 0.3s ease-out;
             `;
-            refreshIndicator.textContent = '🔄 Refreshing...';
+            refreshIndicator.innerHTML = '<i class="fas fa-sync fa-spin"></i> Refreshing...';
             document.body.appendChild(refreshIndicator);
             
             setTimeout(() => {

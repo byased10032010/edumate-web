@@ -200,7 +200,7 @@ render_dashboard_header(
                 <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:12px; text-align:center;">
                     <div style="color:var(--text-light); font-size:11px; text-transform:uppercase; font-weight:600; margin-bottom:4px;">Study Streak</div>
                     <div style="font-size:24px; font-weight:700; color:#38f9d7;"><?php echo $streak; ?> Days</div>
-                    <span style="font-size:11px; color:var(--text-light);">Learning streak 🔥</span>
+                    <span style="font-size:11px; color:var(--text-light);">Learning streak <i class="fa-solid fa-fire" style="color:#f5576c;"></i></span>
                 </div>
             </div>
 

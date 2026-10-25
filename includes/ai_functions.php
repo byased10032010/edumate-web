@@ -52,7 +52,7 @@ function get_supported_ai_models(): array {
         'gemini-3.6-flash' => [
             'id'          => 'gemini-3.6-flash',
             'name'        => 'Gemini 3.6 Flash',
-            'badge'       => '⚡ REASONING',
+            'badge'       => '<i class="fa-solid fa-bolt"></i> REASONING',
             'tag'         => 'Deep Reasoning & High Intelligence',
             'desc'        => 'High-intelligence reasoning engine. Excellent for step-by-step math derivations, Olympiad flashcards, and multimodal science queries.',
             'recommended' => true
@@ -60,7 +60,7 @@ function get_supported_ai_models(): array {
         'gemini-3.8-flash' => [
             'id'          => 'gemini-3.8-flash',
             'name'        => 'Gemini 3.8 Flash',
-            'badge'       => '🚀 CUTTING-EDGE',
+            'badge'       => '<i class="fa-solid fa-rocket"></i> CUTTING-EDGE',
             'tag'         => 'Latest Next-Gen Flagship Architecture',
             'desc'        => 'Google\'s newest generative breakthrough with superior speed and comprehension.',
             'recommended' => false
@@ -68,7 +68,7 @@ function get_supported_ai_models(): array {
         'gemini-3.5-flash' => [
             'id'          => 'gemini-3.5-flash',
             'name'        => 'Gemini 3.5 Flash',
-            'badge'       => '🌟 BALANCED',
+            'badge'       => '<i class="fa-solid fa-star"></i> BALANCED',
             'tag'         => 'High Precision & Fast Throughput',
             'desc'        => 'Well-rounded model for comprehensive revision, assignments, and essay critique.',
             'recommended' => false
@@ -76,7 +76,7 @@ function get_supported_ai_models(): array {
         'gemini-3.1-pro-preview' => [
             'id'          => 'gemini-3.1-pro-preview',
             'name'        => 'Gemini 3.1 Pro',
-            'badge'       => '🧠 PRO OLYMPIAD',
+            'badge'       => '<i class="fa-solid fa-brain"></i> PRO OLYMPIAD',
             'tag'         => 'Deepest Academic Rigor & Logic',
             'desc'        => 'Pro-tier reasoning for competitive exams, board paper setters, and advanced STEM problems.',
             'recommended' => false
@@ -84,7 +84,7 @@ function get_supported_ai_models(): array {
         'gemini-3-flash-preview' => [
             'id'          => 'gemini-3-flash-preview',
             'name'        => 'Gemini 3.0 Flash Preview',
-            'badge'       => '⚡ FAST',
+            'badge'       => '<i class="fa-solid fa-bolt-lightning"></i> FAST',
             'tag'         => 'Fast 3.0 Multimodal Reasoning',
             'desc'        => 'Responsive next-generation model for interactive quizzes and instant timetables.',
             'recommended' => false
@@ -92,7 +92,7 @@ function get_supported_ai_models(): array {
         'gemini-2.5-flash' => [
             'id'          => 'gemini-2.5-flash',
             'name'        => 'Gemini 2.5 Flash',
-            'badge'       => '🛡️ STABLE',
+            'badge'       => '<i class="fa-solid fa-shield-halved"></i> STABLE',
             'tag'         => 'Legacy High-Speed Standard',
             'desc'        => 'Reliable fallback model for general queries and summaries.',
             'recommended' => false

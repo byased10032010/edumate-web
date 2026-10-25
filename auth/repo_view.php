@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         if (!empty($fileName)) {
-            // ✅ CHECK FOR DUPLICATE FILE NAME IN THE SAME FOLDER
+            // [OK] CHECK FOR DUPLICATE FILE NAME IN THE SAME FOLDER
             $checkDuplicateStmt = $repoConn->prepare("SELECT COUNT(*) as count FROM files WHERE folder = ? AND file_name = ? AND file_type != 'folder'");
             $checkDuplicateStmt->bind_param("ss", $folder, $fileName);
             $checkDuplicateStmt->execute();
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $insertFile->bind_param("ssss", $folder, $fileName, $fileType, $_SESSION['user_id']);
                     
                     if ($insertFile->execute()) {
-                        // ✅ ADD COMMIT FOR FILE CREATION (UPDATED STRUCTURE)
+                        // [OK] ADD COMMIT FOR FILE CREATION (UPDATED STRUCTURE)
                         $commitHash = bin2hex(random_bytes(16));
                         $commitMessage = "Created file: $fileName" . ($folder !== 'root' ? " in $folder" : "");
                         $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($folderName)) {
             $newFolder = $parentFolder === 'root' ? $folderName : $parentFolder . '/' . $folderName;
             
-            // ✅ CHECK FOR DUPLICATE FOLDER NAME IN THE SAME PARENT FOLDER
+            // [OK] CHECK FOR DUPLICATE FOLDER NAME IN THE SAME PARENT FOLDER
             $checkDuplicateStmt = $repoConn->prepare("SELECT COUNT(*) as count FROM files WHERE folder = ? AND file_name = '.folder' AND file_type = 'folder'");
             $checkDuplicateStmt->bind_param("s", $newFolder);
             $checkDuplicateStmt->execute();
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $insertFolder->bind_param("ss", $newFolder, $_SESSION['user_id']);
                     
                     if ($insertFolder->execute()) {
-                        // ✅ ADD COMMIT FOR FOLDER CREATION (UPDATED STRUCTURE)
+                        // [OK] ADD COMMIT FOR FOLDER CREATION (UPDATED STRUCTURE)
                         $commitHash = bin2hex(random_bytes(16));
                         $commitMessage = "Created folder: $folderName" . ($parentFolder !== 'root' ? " in $parentFolder" : "");
                         $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $addCollabStmt->bind_param("ssss", $collaboratorId, $collaborator['username'], $permission, $_SESSION['user_id']);
                 
                 if ($addCollabStmt->execute()) {
-                    // ✅ ADD COMMIT FOR COLLABORATOR ADDITION
+                    // [OK] ADD COMMIT FOR COLLABORATOR ADDITION
                     $commitHash = bin2hex(random_bytes(16));
                     $commitMessage = "Added collaborator: {$collaborator['first_name']} {$collaborator['last_name']}";
                     $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -257,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $deleteStmt->bind_param("i", $fileId);
         
         if ($deleteStmt->execute()) {
-            // ✅ ADD COMMIT FOR FILE DELETION (UPDATED STRUCTURE)
+            // [OK] ADD COMMIT FOR FILE DELETION (UPDATED STRUCTURE)
             $commitHash = bin2hex(random_bytes(16));
             $commitMessage = "Deleted file: $fileName" . ($fileFolder !== 'root' ? " from $fileFolder" : "");
             $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -285,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $deleteStmt->bind_param("ss", $folderPath, $likePattern);
         
         if ($deleteStmt->execute()) {
-            // ✅ ADD COMMIT FOR FOLDER DELETION (UPDATED STRUCTURE)
+            // [OK] ADD COMMIT FOR FOLDER DELETION (UPDATED STRUCTURE)
             $commitHash = bin2hex(random_bytes(16));
             $commitMessage = "Deleted folder: $folderName and its contents";
             $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -316,7 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateStmt->bind_param("sss", $repoName, $description, $repoId);
     
     if ($updateStmt->execute()) {
-        // ✅ ADD COMMIT FOR SETTINGS UPDATE (UPDATED STRUCTURE)
+        // [OK] ADD COMMIT FOR SETTINGS UPDATE (UPDATED STRUCTURE)
         $commitHash = bin2hex(random_bytes(16));
         $commitMessage = "Updated repository settings";
         $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -367,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $shareStmt->bind_param("sssss", $shareToken, $sharePermission, $expiryDate, $_SESSION['user_id'], $repoId);
         
         if ($shareStmt->execute()) {
-            // ✅ ADD COMMIT FOR SHARE LINK CREATION
+            // [OK] ADD COMMIT FOR SHARE LINK CREATION
             $commitHash = bin2hex(random_bytes(16));
             $commitMessage = "Generated share link with $sharePermission permissions";
             $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -432,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $insertStmt->bind_param("sss", $repoId, $repoId, $currentDesc);
                 
                 if ($insertStmt->execute()) {
-                    // ✅ ADD COMMIT FOR OWNERSHIP TRANSFER (UPDATED STRUCTURE)
+                    // [OK] ADD COMMIT FOR OWNERSHIP TRANSFER (UPDATED STRUCTURE)
                     $commitHash = bin2hex(random_bytes(16));
                     $commitMessage = "Transferred repository ownership to {$newOwner['first_name']} {$newOwner['last_name']}";
                     $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -460,7 +460,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $confirmRepoName = trim($_POST['confirm_repo_name']);
         
         if ($confirmRepoName === $repoId) {
-            // ✅ ADD FINAL COMMIT BEFORE DELETION (UPDATED STRUCTURE)
+            // [OK] ADD FINAL COMMIT BEFORE DELETION (UPDATED STRUCTURE)
             $commitHash = bin2hex(random_bytes(16));
             $commitMessage = "Deleted repository: $repoId";
             $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -507,7 +507,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $removeStmt->bind_param("s", $collaboratorId);
         
         if ($removeStmt->execute()) {
-            // ✅ ADD COMMIT FOR COLLABORATOR REMOVAL
+            // [OK] ADD COMMIT FOR COLLABORATOR REMOVAL
             $commitHash = bin2hex(random_bytes(16));
             $commitMessage = "Removed collaborator: $collabUsername";
             $authorName = $user['first_name'] . ' ' . $user['last_name'];
@@ -533,7 +533,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK) {
                     $fileName = basename($name);
                     
-                    // ✅ CHECK FOR DUPLICATE FILE NAME IN THE SAME FOLDER
+                    // [OK] CHECK FOR DUPLICATE FILE NAME IN THE SAME FOLDER
                     $checkDuplicateStmt = $repoConn->prepare("SELECT COUNT(*) as count FROM files WHERE folder = ? AND file_name = ? AND file_type != 'folder'");
                     $checkDuplicateStmt->bind_param("ss", $uploadFolder, $fileName);
                     $checkDuplicateStmt->execute();
@@ -565,7 +565,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $insertFile->bind_param("ssss", $uploadFolder, $fileName, $fileType, $_SESSION['user_id']);
                         
                         if ($insertFile->execute()) {
-                            // ✅ ADD COMMIT FOR FILE UPLOAD
+                            // [OK] ADD COMMIT FOR FILE UPLOAD
                             $commitHash = bin2hex(random_bytes(16));
                             $commitMessage = "Uploaded file: $fileName" . ($uploadFolder !== 'root' ? " in $uploadFolder" : "");
                             $authorName = $user['first_name'] . ' ' . $user['last_name'];

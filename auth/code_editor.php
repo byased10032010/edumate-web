@@ -2395,7 +2395,7 @@ function getFileIcon($fileType) {
                     });
                     // Show folders
                     fileStructure.folders.filter(f => f.folder !== 'root').forEach(folder => {
-                        output += `<div><span style="color: #f59e0b">  📁 ${folder.folder.split('/').pop()}</span></div>`;
+                        output += `<div><span style="color: #f59e0b">  <i class="fas fa-folder"></i> ${folder.folder.split('/').pop()}</span></div>`;
                     });
                     return output || '<div>No files in directory</div>';
                     

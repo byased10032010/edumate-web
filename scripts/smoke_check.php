@@ -26,6 +26,6 @@ function load_page(string $script): array {
 }
 
 $r = load_page('login.php');
-echo $r['ok'] ? "✅ login.php prerequisites OK (db() works)\n" : "❌ " . $r['output'];
+echo $r['ok'] ? "[OK] login.php prerequisites OK (db() works)\n" : "[FAIL] " . $r['output'];
 $r = load_page('register.php');
-echo $r['ok'] ? "✅ register.php prerequisites OK (db() works)\n" : "❌ " . $r['output'];
+echo $r['ok'] ? "[OK] register.php prerequisites OK (db() works)\n" : "[FAIL] " . $r['output'];

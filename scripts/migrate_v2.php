@@ -43,8 +43,8 @@ try {
             ->execute([':tid' => $scienceTeacherId]);
     }
 
-    echo "✅ Migration v2 complete.\n";
+    echo "[OK] Migration v2 complete.\n";
 } catch (Throwable $e) {
-    echo "❌ Migration v2 failed: " . $e->getMessage() . "\n";
+    echo "[ERROR] Migration v2 failed: " . $e->getMessage() . "\n";
     exit(1);
 }

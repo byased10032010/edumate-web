@@ -2427,7 +2427,7 @@ body {
                                         <span class="stat-label">Collaborators</span>
                                     </div>
                                     <div class="repo-stat">
-                                        <span class="stat-value"><?php echo $repo['activity_level'] === 'high' ? '🔥' : ($repo['activity_level'] === 'medium' ? '⚡' : '🌱'); ?></span>
+                                        <span class="stat-value"><?php echo $repo['activity_level'] === 'high' ? '<i class="fas fa-fire" style="color:#ef4444;"></i>' : ($repo['activity_level'] === 'medium' ? '<i class="fas fa-bolt" style="color:#f59e0b;"></i>' : '<i class="fas fa-seedling" style="color:#10b981;"></i>'); ?></span>
                                         <span class="stat-label">Activity</span>
                                     </div>
                                 </div>

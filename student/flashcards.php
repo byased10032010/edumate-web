@@ -566,7 +566,7 @@ render_dashboard_header(
                         <ion-icon name="hardware-chip-outline" style="color:var(--gradient-info); font-size:16px;"></ion-icon>
                         <span style="font-size:12px; font-weight:600; color:var(--text-light);">AI Model:</span>
                         <span id="flashcard-model-name-display" style="font-size:12px; font-weight:700; color:var(--text-primary);">Gemini 3.6 Flash</span>
-                        <span id="flashcard-model-badge-display" class="model-badge-chip">⚡ REASONING</span>
+                        <span id="flashcard-model-badge-display" class="model-badge-chip"><i class="fa-solid fa-bolt"></i> REASONING</span>
                         <ion-icon name="chevron-down-outline" class="flashcard-chevron"></ion-icon>
                     </button>
                     <select id="flashcard-model-select" style="position:absolute; opacity:0; pointer-events:none; width:0; height:0;" onchange="onFlashcardModelChange(this.value)">
@@ -726,7 +726,7 @@ render_dashboard_header(
         const nameEl = document.getElementById('flashcard-model-name-display');
         const badgeEl = document.getElementById('flashcard-model-badge-display');
         if (nameEl) nameEl.textContent = info.name;
-        if (badgeEl) badgeEl.textContent = info.badge;
+        if (badgeEl) badgeEl.innerHTML = info.badge;
 
         const sel = document.getElementById('flashcard-model-select');
         if (sel && sel.value !== val) sel.value = val;
@@ -964,7 +964,7 @@ render_dashboard_header(
 
         if (card.user_status === 'mastered') {
             btnMaster.className = 'btn btn-success';
-            btnMaster.innerHTML = '<ion-icon name="checkmark-done-circle-outline"></ion-icon> Mastered ✓';
+            btnMaster.innerHTML = '<ion-icon name="checkmark-done-circle-outline"></ion-icon> Mastered';
         } else {
             btnMaster.className = 'btn btn-secondary';
             btnMaster.innerHTML = '<ion-icon name="checkmark-circle-outline"></ion-icon> Mark Mastered';

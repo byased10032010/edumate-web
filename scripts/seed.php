@@ -316,7 +316,7 @@ foreach ($activities as [$uid, $icon, $title, $detail]) {
 }
 echo "Activities ready.\n";
 
-echo "\n✅ Seed complete.\n";
+echo "\n[OK] Seed complete.\n";
 echo "Demo accounts (use these to log in):\n";
 echo "  admin@edumate.local      / Admin@12345  (admin)\n";
 echo "  ananya.rao@edumate.local  / Teacher@123  (teacher)\n";

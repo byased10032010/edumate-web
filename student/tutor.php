@@ -166,7 +166,7 @@ render_dashboard_header(
   function appendMessage(text, role) {
     const bubble = document.createElement('div');
     bubble.className = 'chat-bubble ' + role;
-    bubble.textContent = text;
+    bubble.innerHTML = role === 'user' ? text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : text;
     chatWindow.appendChild(bubble);
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
@@ -299,9 +299,9 @@ function generate_tutor_reply(string $msg, int $uid): string
     if (isset($practiceQuestions[$class])) {
         $correctAnswer = $practiceQuestions[$class][1];
         if (trim(strtolower($msg)) === $correctAnswer) {
-            return "🎉 Correct! Excellent job. You have mastered that Class {$class} practice question! Would you like another explanation or a new query?";
+            return "<i class=\"fa-solid fa-circle-check\" style=\"color:var(--success, #10b981); margin-right:4px;\"></i> Correct! Excellent job. You have mastered that Class {$class} practice question! Would you like another explanation or a new query?";
         } elseif (in_array(trim(strtolower($msg)), ['a', 'b', 'c', 'd'], true)) {
-            return "❌ That's incorrect. The correct answer was '{$correctAnswer}'. Would you like me to explain this concept in detail?";
+            return "<i class=\"fa-solid fa-circle-xmark\" style=\"color:var(--danger, #ef4444); margin-right:4px;\"></i> That's incorrect. The correct answer was '{$correctAnswer}'. Would you like me to explain this concept in detail?";
         }
     }
 

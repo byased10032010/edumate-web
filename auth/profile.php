@@ -1864,11 +1864,12 @@ body {
         }
 
         .checkbox:checked::before {
-            content: '✓';
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             position: absolute;
             color: white;
             font-size: 0.8rem;
-            font-weight: bold;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -1905,14 +1906,15 @@ body {
         }
 
         .color-option.selected::after {
-            content: '✓';
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 

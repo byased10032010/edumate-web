@@ -61,7 +61,7 @@ if (isset($_SESSION['user_id'])) {
                     <g><path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="currentColor"/><path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#g1-three)"/><path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#g2-three)"/></g>
                 </svg>
             </div>
-            <span class="page-loader-label">Loading your study space 📚</span>
+            <span class="page-loader-label">Loading your study space <i class="fa-solid fa-book-open" style="margin-left:6px; color:var(--violet, #6366f1);"></i></span>
         </div>
     </div>
 
@@ -108,12 +108,12 @@ if (isset($_SESSION['user_id'])) {
             <button type="button" class="mobile-drawer-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <nav class="mobile-drawer-links">
-            <a href="#boards">🎓 Boards</a>
-            <a href="#features">✨ Features</a>
-            <a href="#app">📱 App</a>
-            <a href="#subscriptions">📋 Plans</a>
-            <a href="#privacy">🔒 Privacy</a>
-            <a href="#faq">❓ FAQ</a>
+            <a href="#boards"><i class="fa-solid fa-graduation-cap"></i> Boards</a>
+            <a href="#features"><i class="fa-solid fa-wand-magic-sparkles"></i> Features</a>
+            <a href="#app"><i class="fa-solid fa-mobile-screen"></i> App</a>
+            <a href="#subscriptions"><i class="fa-solid fa-clipboard-list"></i> Plans</a>
+            <a href="#privacy"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+            <a href="#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
         </nav>
         <div class="mobile-drawer-actions">
             <label class="theme-switch theme-switch--mobile" aria-label="Toggle dark mode">
@@ -129,16 +129,16 @@ if (isset($_SESSION['user_id'])) {
         <!-- Hero Section -->
         <section class="hero" id="signup">
             <div class="hero-content">
-                <p class="eyebrow">📘 Study smarter, together</p>
+                <p class="eyebrow"><i class="fa-solid fa-book-bookmark"></i> Study smarter, together</p>
                 <h1 class="typewriter">
                     Master every board,<br>
                     <span class="typewriter-text"></span><span class="typewriter-caret">▌</span>
                 </h1>
                 <p class="hero-copy"><strong>EduMate</strong> turns your notes into playful flashcards, hosts group study rooms, and keeps you on track with a tiny pomodoro timer that doesn't yell at you. Built for students across all major Indian boards.</p>
                 <div class="study-tabs">
-                    <button class="study-tab active" type="button">📚 Flashcards</button>
-                    <button class="study-tab" type="button">🎧 Study Rooms</button>
-                    <button class="study-tab" type="button">🍅 Focus</button>
+                    <button class="study-tab active" type="button"><i class="fa-solid fa-layer-group"></i> Flashcards</button>
+                    <button class="study-tab" type="button"><i class="fa-solid fa-headphones"></i> Study Rooms</button>
+                    <button class="study-tab" type="button"><i class="fa-solid fa-stopwatch"></i> Focus</button>
                 </div>
                 <div class="hero-actions">
                     <a href="register.php" class="play-btn play-btn--coral"><i class="fa-solid fa-rocket"></i><span>Start studying free</span></a>
@@ -146,17 +146,17 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="streak-row">
                     <span class="is-fire" title="Mon"></span><span class="is-fire" title="Tue"></span><span class="is-fire" title="Wed"></span><span class="is-fire" title="Thu"></span><span class="is-on" title="Today"></span><span title="Sat"></span><span title="Sun"></span>
-                    <em style="font-style:normal; color:var(--muted); font-size:0.78rem; font-weight:600; margin-left:6px;">5 day streak 🔥</em>
+                    <em style="font-style:normal; color:var(--muted); font-size:0.78rem; font-weight:600; margin-left:6px;">5 day streak <i class="fa-solid fa-fire" style="color:var(--coral);"></i></em>
                 </div>
             </div>
             <!-- Study Widget -->
             <div class="sw-wrapper">
-                <div class="sw-decor sw-decor--tl" aria-hidden="true"><span>📚</span> CBSE</div>
-                <div class="sw-decor sw-decor--tr" aria-hidden="true"><span>🔥</span> 5-day streak</div>
-                <div class="sw-decor sw-decor--bl" aria-hidden="true"><span>⭐</span> 1,240 XP</div>
-                <div class="sw-decor sw-decor--br" aria-hidden="true"><span>🍅</span> Focus mode</div>
-                <div class="sw-decor sw-decor--mid-l" aria-hidden="true"><span>✏️</span> Quiz time!</div>
-                <div class="sw-decor sw-decor--mid-r" aria-hidden="true"><span>💡</span> New card</div>
+                <div class="sw-decor sw-decor--tl" aria-hidden="true"><span><i class="fa-solid fa-book" style="color:var(--sky, #0ea5e9);"></i></span> CBSE</div>
+                <div class="sw-decor sw-decor--tr" aria-hidden="true"><span><i class="fa-solid fa-fire" style="color:var(--coral);"></i></span> 5-day streak</div>
+                <div class="sw-decor sw-decor--bl" aria-hidden="true"><span><i class="fa-solid fa-star" style="color:var(--amber);"></i></span> 1,240 XP</div>
+                <div class="sw-decor sw-decor--br" aria-hidden="true"><span><i class="fa-solid fa-stopwatch" style="color:var(--teal);"></i></span> Focus mode</div>
+                <div class="sw-decor sw-decor--mid-l" aria-hidden="true"><span><i class="fa-solid fa-pen-nib" style="color:var(--violet);"></i></span> Quiz time!</div>
+                <div class="sw-decor sw-decor--mid-r" aria-hidden="true"><span><i class="fa-solid fa-lightbulb" style="color:var(--green);"></i></span> New card</div>
                 <span class="sw-dot sw-dot--1"></span>
                 <span class="sw-dot sw-dot--2"></span>
                 <span class="sw-dot sw-dot--3"></span>
@@ -182,9 +182,9 @@ if (isset($_SESSION['user_id'])) {
                     </div>
 
                     <div class="sw-tabs" role="tablist">
-                        <button class="sw-tab active" data-sw-tab="flashcard" role="tab" aria-selected="true">📚 Flashcard</button>
-                        <button class="sw-tab" data-sw-tab="quiz" role="tab" aria-selected="false">🧠 Quiz</button>
-                        <button class="sw-tab" data-sw-tab="focus" role="tab" aria-selected="false">🍅 Focus</button>
+                        <button class="sw-tab active" data-sw-tab="flashcard" role="tab" aria-selected="true"><i class="fa-solid fa-layer-group"></i> Flashcard</button>
+                        <button class="sw-tab" data-sw-tab="quiz" role="tab" aria-selected="false"><i class="fa-solid fa-brain"></i> Quiz</button>
+                        <button class="sw-tab" data-sw-tab="focus" role="tab" aria-selected="false"><i class="fa-solid fa-stopwatch"></i> Focus</button>
                     </div>
 
                     <!-- Flashcard Panel -->
@@ -194,7 +194,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="sw-flashcard__face sw-flashcard__face--front">
                                     <span class="sw-fc-label">Question</span>
                                     <p class="sw-fc-text" id="swFcQuestion">What is Newton's Second Law?</p>
-                                    <span class="sw-fc-hint">Click to reveal answer ✨</span>
+                                    <span class="sw-fc-hint">Click to reveal answer <i class="fa-solid fa-wand-magic-sparkles"></i></span>
                                 </div>
                                 <div class="sw-flashcard__face sw-flashcard__face--back">
                                     <span class="sw-fc-label">Answer</span>
@@ -251,17 +251,17 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Bottom stats -->
                     <div class="sw-stats">
                         <div class="sw-stat">
-                            <span class="sw-stat__emoji">🔥</span>
+                            <span class="sw-stat__emoji" style="color:var(--coral);"><i class="fa-solid fa-fire"></i></span>
                             <strong class="sw-stat__num" id="swStreakNum">5</strong>
                             <span class="sw-stat__label">day streak</span>
                         </div>
                         <div class="sw-stat">
-                            <span class="sw-stat__emoji">⭐</span>
+                            <span class="sw-stat__emoji" style="color:var(--amber);"><i class="fa-solid fa-star"></i></span>
                             <strong class="sw-stat__num" id="swXpNum">1240</strong>
                             <span class="sw-stat__label">XP earned</span>
                         </div>
                         <div class="sw-stat">
-                            <span class="sw-stat__emoji">📖</span>
+                            <span class="sw-stat__emoji" style="color:var(--teal);"><i class="fa-solid fa-book-open"></i></span>
                             <strong class="sw-stat__num" id="swCardsNum">48</strong>
                             <span class="sw-stat__label">cards done</span>
                         </div>
@@ -275,14 +275,14 @@ if (isset($_SESSION['user_id'])) {
         <!-- Boards Section -->
         <section class="boards-section reveal" id="boards">
             <div class="section-heading">
-                <p class="eyebrow" style="--accent:var(--amber);">🎓 Supported Boards</p>
+                <p class="eyebrow" style="--accent:var(--amber);"><i class="fa-solid fa-graduation-cap"></i> Supported Boards</p>
                 <h2>Pick your <span class="highlight highlight--mint">board</span>, start studying.</h2>
                 <p class="section-sub">EduMate has curated content, past papers, and study rooms tailored to every major Indian curriculum.</p>
             </div>
             <div class="boards-grid">
                 <article class="board-card board-card--icse">
                     <div class="board-card__top">
-                        <span class="board-emoji">📘</span>
+                        <span class="board-emoji"><i class="fa-solid fa-book-bookmark" style="color:var(--brand-blue, #2563eb);"></i></span>
                         <div>
                             <h3 class="board-card__name">ICSE</h3>
                             <span class="board-card__full">Indian Certificate of Secondary Education</span>
@@ -305,7 +305,7 @@ if (isset($_SESSION['user_id'])) {
 
                 <article class="board-card board-card--cbse">
                     <div class="board-card__top">
-                        <span class="board-emoji">📗</span>
+                        <span class="board-emoji"><i class="fa-solid fa-book-bookmark" style="color:var(--green, #10b981);"></i></span>
                         <div>
                             <h3 class="board-card__name">CBSE</h3>
                             <span class="board-card__full">Central Board of Secondary Education</span>
@@ -328,7 +328,7 @@ if (isset($_SESSION['user_id'])) {
 
                 <article class="board-card board-card--wbbse">
                     <div class="board-card__top">
-                        <span class="board-emoji">📙</span>
+                        <span class="board-emoji"><i class="fa-solid fa-book-bookmark" style="color:var(--amber, #f59e0b);"></i></span>
                         <div>
                             <h3 class="board-card__name">WBBSE</h3>
                             <span class="board-card__full">West Bengal Board of Secondary Education</span>
@@ -351,7 +351,7 @@ if (isset($_SESSION['user_id'])) {
 
                 <article class="board-card board-card--maha">
                     <div class="board-card__top">
-                        <span class="board-emoji">📕</span>
+                        <span class="board-emoji"><i class="fa-solid fa-book-bookmark" style="color:var(--coral, #f43f5e);"></i></span>
                         <div>
                             <h3 class="board-card__name">Maharashtra Board</h3>
                             <span class="board-card__full">Maharashtra State Board of Secondary &amp; Higher Secondary Education</span>
@@ -461,7 +461,7 @@ if (isset($_SESSION['user_id'])) {
         <section class="app-download-section reveal" id="app">
             <div class="app-download-inner">
                 <div class="app-download-text">
-                    <p class="eyebrow" style="--accent:var(--coral);">📱 Study on the go</p>
+                    <p class="eyebrow" style="--accent:var(--coral);"><i class="fa-solid fa-mobile-screen"></i> Study on the go</p>
                     <h2>Your pocket<br><span class="highlight highlight--pink">study buddy</span></h2>
                     <p class="section-sub">Flashcards, quizzes, focus timers, and live study rooms — all in your pocket. Available free on Android and iOS.</p>
                     <ul class="app-feature-list">
@@ -496,10 +496,10 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 </div>
                 <div class="app-download-visual">
-                    <div class="app-chip app-chip--tl"><span>🔥</span> 7-day streak!</div>
-                    <div class="app-chip app-chip--tr"><span>⭐</span> 2,400 XP</div>
-                    <div class="app-chip app-chip--bl"><span>📖</span> 120 cards done</div>
-                    <div class="app-chip app-chip--br"><span>🍅</span> Focus on!</div>
+                    <div class="app-chip app-chip--tl"><span><i class="fa-solid fa-fire" style="color:var(--coral);"></i></span> 7-day streak!</div>
+                    <div class="app-chip app-chip--tr"><span><i class="fa-solid fa-star" style="color:var(--amber);"></i></span> 2,400 XP</div>
+                    <div class="app-chip app-chip--bl"><span><i class="fa-solid fa-book-open" style="color:var(--teal);"></i></span> 120 cards done</div>
+                    <div class="app-chip app-chip--br"><span><i class="fa-solid fa-stopwatch" style="color:var(--violet);"></i></span> Focus on!</div>
 
                     <div class="app-phone">
                         <div class="app-phone__frame">
@@ -521,7 +521,7 @@ if (isset($_SESSION['user_id'])) {
                                     <div class="app-screen-notif"><i class="fa-solid fa-bell"></i><span class="app-notif-dot"></span></div>
                                 </div>
                                 <div class="app-screen-streak">
-                                    <span>🔥</span>
+                                    <span style="color:var(--coral);"><i class="fa-solid fa-fire"></i></span>
                                     <div>
                                         <strong>7-day streak!</strong>
                                         <em>Keep it up — you're on fire</em>

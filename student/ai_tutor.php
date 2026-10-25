@@ -830,7 +830,7 @@ render_dashboard_header('AI Tutor', student_nav(), 'ai-tutor', ['AI Tutor'], 'AI
         <div>
             <div class="ai-engine-title">
                 AI Engine Model
-                <span id="active-model-badge" class="model-badge-chip">⚡ REASONING</span>
+                <span id="active-model-badge" class="model-badge-chip"><i class="fa-solid fa-bolt"></i> REASONING</span>
             </div>
             <div class="ai-engine-desc">Elevate your tutor with Google's next-generation reasoning, multimodal math analysis, and high-rigor Olympiad models.</div>
         </div>
@@ -855,7 +855,7 @@ render_dashboard_header('AI Tutor', student_nav(), 'ai-tutor', ['AI Tutor'], 'AI
                     <div class="ai-model-trigger-text">
                         <div class="ai-model-trigger-headline">
                             <span class="ai-model-trigger-name" id="ai-model-selected-name">Gemini 3.6 Flash</span>
-                            <span class="model-badge-chip ai-model-trigger-badge" id="ai-model-trigger-badge">⚡ REASONING</span>
+                            <span class="model-badge-chip ai-model-trigger-badge" id="ai-model-trigger-badge"><i class="fa-solid fa-bolt"></i> REASONING</span>
                         </div>
                         <span class="ai-model-trigger-tag" id="ai-model-selected-tag">Deep Reasoning & High Intelligence</span>
                     </div>
@@ -898,7 +898,7 @@ render_dashboard_header('AI Tutor', student_nav(), 'ai-tutor', ['AI Tutor'], 'AI
                                             <span class="ai-model-chip-rec"><ion-icon name="star"></ion-icon> RECOMMENDED</span>
                                         <?php endif; ?>
                                     </div>
-                                    <span class="model-badge-chip"><?php echo htmlspecialchars($mInfo['badge'], ENT_QUOTES); ?></span>
+                                    <span class="model-badge-chip"><?php echo $mInfo['badge']; ?></span>
                                 </div>
                                 <div class="ai-model-option-tagline"><?php echo htmlspecialchars($mInfo['tag'], ENT_QUOTES); ?></div>
                                 <div class="ai-model-option-desc"><?php echo htmlspecialchars($mInfo['desc'], ENT_QUOTES); ?></div>
@@ -1176,7 +1176,7 @@ function onModelChange(val) {
     const meta = supportedAiModels[val];
     const badge = document.getElementById('active-model-badge');
     if (badge && meta) {
-        badge.textContent = meta.badge;
+        badge.innerHTML = meta.badge;
     }
 
     // Keep hidden select in sync
@@ -1193,7 +1193,7 @@ function onModelChange(val) {
 
     if (nameEl && meta) nameEl.textContent = meta.name;
     if (tagEl && meta) tagEl.textContent = meta.tag;
-    if (triggerBadge && meta) triggerBadge.textContent = meta.badge;
+    if (triggerBadge && meta) triggerBadge.innerHTML = meta.badge;
     if (triggerIconWrap) {
         const iconName = getModelIcon(val);
         triggerIconWrap.innerHTML = `<ion-icon name="${iconName}"></ion-icon>`;

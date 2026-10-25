@@ -119,8 +119,8 @@ try {
         echo "Seeded default course subjects.\n";
     }
 
-    echo "✅ Migrations complete.\n";
+    echo "[OK] Migrations complete.\n";
 } catch (Throwable $e) {
-    echo "❌ Migration failed: " . $e->getMessage() . "\n";
+    echo "[ERROR] Migration failed: " . $e->getMessage() . "\n";
     exit(1);
 }

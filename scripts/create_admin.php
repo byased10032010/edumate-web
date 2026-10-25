@@ -31,10 +31,10 @@ try {
     );
     $stmt->execute([':n' => $name, ':e' => $email, ':p' => $hash]);
 
-    echo "<h2>✅ Admin account ready</h2>";
+    echo "<h2><i class='fa-solid fa-circle-check' style='color:#10b981'></i> Admin account ready</h2>";
     echo "<p><strong>Email:</strong> {$email}</p>";
     echo "<p><strong>Password:</strong> {$password}</p>";
-    echo "<p style='color:#b21f3a'>⚠ Delete <code>scripts/create_admin.php</code> from your server after running this once.</p>";
+    echo "<p style='color:#b21f3a'><i class='fa-solid fa-triangle-exclamation'></i> Delete <code>scripts/create_admin.php</code> from your server after running this once.</p>";
 } catch (Throwable $e) {
     error_log('create_admin failed: ' . $e->getMessage());
     http_response_code(500);
