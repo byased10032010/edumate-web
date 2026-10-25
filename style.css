@@ -46,7 +46,7 @@ html[data-theme="dark"] {
     --paper: #261348;
     --ink: #fef6ff;
     --muted: #c2b5e0;
-    --line: #3a2160;
+    --line: #715299;
     --violet: #a78bff;
     --violet-soft: #d3c4ff;
     --coral: #ff7aa8;
@@ -60,6 +60,24 @@ html[data-theme="dark"] {
                       0 10px 24px rgba(0, 0, 0, 0.5);
     --eyebrow-color: #ffd66b;
     --eyebrow-bg: rgba(255, 214, 107, 0.16);
+}
+
+/* Text-safe shades keep the existing accents while making small labels readable. */
+:root {
+    --violet-text: #5639c4;
+    --coral-text: #b92756;
+    --amber-text: #755000;
+    --green-text: #19713b;
+    --sky-text: #17618a;
+    --pink-text: #a3376b;
+}
+html[data-theme="dark"] {
+    --violet-text: #d3c4ff;
+    --coral-text: #ff9cbb;
+    --amber-text: #ffe08a;
+    --green-text: #8af0b5;
+    --sky-text: #a6e0ff;
+    --pink-text: #ffc1e0;
 }
 
 /* ---------- Reset ---------- */
@@ -4927,6 +4945,19 @@ html[data-theme="dark"] .scroll-top-ring-track { stroke: var(--line); opacity: 1
 .board-badge--green  { color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); }
 .board-badge--amber  { color: var(--amber); background: color-mix(in srgb, var(--amber) 12%, transparent); }
 .board-badge--coral  { color: var(--coral); background: color-mix(in srgb, var(--coral) 12%, transparent); }
+
+/* Keep pastel badge surfaces, but use readable foreground shades. */
+.board-badge--blue { color: var(--sky-text); }
+.board-badge--green { color: var(--green-text); }
+.board-badge--amber { color: var(--amber-text); }
+.board-badge--coral { color: var(--coral-text); }
+.text-coral { color: var(--coral-text); }
+.text-amber { color: var(--amber-text); }
+.text-sky { color: var(--sky-text); }
+.text-pink { color: var(--pink-text); }
+.faq-tag.active { background: var(--violet-text); border-color: var(--violet-text); color: var(--paper); }
+.btn.primary { background: var(--violet-text); }
+html[data-theme="dark"] .btn.primary { background: var(--violet); color: var(--bg); }
 
 .board-card__desc {
     font-size: 0.88rem;

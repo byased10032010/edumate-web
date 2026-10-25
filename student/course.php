@@ -151,10 +151,29 @@ render_dashboard_header(
     'courses',
     ['Home', 'My Courses', $course['title']]
 );
-?>
+?><style>
+body[data-page] .sidebar{padding:1.25rem 1rem;gap:.35rem} body[data-page] .sidebar .nav-item{min-height:42px;border-radius:12px} body[data-page] .nav-item.active{background:color-mix(in srgb,var(--gradient-primary) 13%,var(--bg-card));color:var(--text-primary)}
+body[data-page] .main{width:min(100%,1680px);margin-inline:auto;padding:clamp(1rem,2.2vw,2rem) clamp(1rem,2.4vw,2.25rem) 3rem} body[data-page] .topbar{align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--border-color);margin-bottom:1.35rem} body[data-page] .topbar h1{font-size:clamp(1.45rem,2vw,1.9rem);line-height:1.25;overflow-wrap:break-word;min-width:0}
+body[data-page] .cards{gap:1rem;margin-bottom:1.25rem} body[data-page] .card{min-height:142px;padding:1.25rem} body[data-page] .card .label{font-size:.75rem;letter-spacing:0;text-transform:none} body[data-page] .card .value{font-size:clamp(1.6rem,2.4vw,2rem);line-height:1.15}
+body[data-page] .panel-grid{gap:1.1rem} body[data-page] .panel{padding:clamp(1rem,1.8vw,1.5rem)} body[data-page] .panel h2{margin-bottom:1rem;font-size:1.12rem;line-height:1.35} body[data-page] .panel h2 .sub{display:inline-block}
+body[data-page] .grid-cards{gap:1rem} body[data-page] .tile{min-width:0;height:100%} body[data-page] .tile .footer{gap:.6rem;flex-wrap:wrap} body[data-page] .btn{min-height:40px;max-width:100%} body[data-page] .form-control{min-height:46px}
+body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem} body[data-page] :where(a,button,input,select,textarea):focus-visible{outline:3px solid var(--gradient-primary);outline-offset:3px}
+@media(max-width:760px){body[data-page] .main{padding:1rem 1rem 2rem} body[data-page] .panel-grid{grid-template-columns:minmax(0,1fr)} body[data-page] .panel-grid>*{min-width:0} body[data-page] .panel{min-width:0;overflow-x:auto} body[data-page] .cards{grid-template-columns:repeat(2,minmax(0,1fr))} body[data-page] table.simple{display:table;width:max-content;min-width:100%}}
+@media(max-width:480px){body[data-page] .cards{grid-template-columns:minmax(0,1fr)} body[data-page] .panel{padding:1rem}}
+</style>
+
+<style>
+.course-overview { border-top: 3px solid var(--gradient-primary); }
+.course-tabs { display:flex; gap:.55rem; overflow-x:auto; padding:0 0 .75rem; border-bottom:1px solid var(--border-color); margin-bottom:1.25rem; scrollbar-width:thin; }
+.course-tabs .btn { flex:0 0 auto; white-space:nowrap; }
+.classroom-content .panel { min-width:0; }
+.classroom-content .activity .item { align-items:flex-start; gap:.75rem; }
+.classroom-content details summary { min-height:36px; display:flex; align-items:center; }
+@media (max-width:560px) { .course-tabs { margin-inline:-.15rem; } .course-overview .progress-bar { max-width:100%; } }
+</style>
 
 <!-- Header Info Banner -->
-<section class="panel" style="position:relative; overflow:hidden; margin-bottom:20px;">
+<section class="panel course-overview" style="position:relative; overflow:hidden; margin-bottom:20px;">
     <div style="background:linear-gradient(135deg, <?php echo htmlspecialchars($course['cover_color'], ENT_QUOTES); ?>, #1a1a2e); position:absolute; top:0; left:0; right:0; height:6px;"></div>
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
         <div>
@@ -187,7 +206,7 @@ render_dashboard_header(
 </section>
 
 <!-- structured PW application-like classroom tabs -->
-<div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; border-bottom:1px solid var(--border-color); margin-bottom:20px;">
+<div class="course-tabs" aria-label="Course materials">
     <a class="btn btn-sm <?php echo $activeTab === 'lectures' ? 'btn-primary' : 'btn-ghost'; ?>" href="course.php?id=<?php echo $courseId; ?>&tab=lectures">
         <ion-icon name="videocam-outline"></ion-icon> Lectures (<?php echo count($videos); ?>)
     </a>

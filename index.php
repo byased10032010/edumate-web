@@ -26,7 +26,60 @@ if (isset($_SESSION['user_id'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=contrast-2">
+    <style>
+        /* Homepage refinements: keep the existing EduMate palette and type system. */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+            align-items: center;
+            gap: clamp(2.5rem, 6vw, 6rem);
+            width: min(100% - 3rem, 1280px);
+            margin-inline: auto;
+            padding-block: clamp(3rem, 6vw, 5.5rem);
+        }
+        .hero-content { width: 100%; max-width: 660px; gap: 1.1rem; padding-top: 0; }
+        .hero .typewriter {
+            max-width: 16ch;
+            font-size: clamp(3rem, 5.5vw, 4.65rem);
+            line-height: 1.04;
+            letter-spacing: -.035em;
+            overflow-wrap: break-word;
+        }
+        .hero-copy { max-width: 52ch; font-size: clamp(1.02rem, 1.35vw, 1.18rem); line-height: 1.75; }
+        .study-tabs { display:flex; flex-wrap:wrap; gap:.55rem; }
+        .study-tab { min-height:42px; padding:.55rem .95rem; border:1px solid var(--line); border-radius:var(--radius-pill); background:var(--paper); color:var(--muted); font-size:.86rem; font-weight:600; }
+        .study-tab.active { background:var(--violet-text); border-color:var(--violet-text); color:var(--paper); }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .35rem; }
+        .hero-actions .play-btn { min-height: 50px; justify-content: center; }
+        .streak-row { margin-top:.25rem; }
+        .sw-wrapper { width: 100%; max-width: 610px; justify-self: end; }
+        .boards-section, .feature-band { width: min(100% - 3rem, 1280px); margin-inline: auto; }
+        .boards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+        .board-card { display: flex; flex-direction: column; height: 100%; }
+        .board-card__foot { margin-top: auto; flex-wrap: wrap; gap: .75rem; }
+        .feature-band { padding-block: clamp(4rem, 8vw, 7rem); }
+        .features-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+        .features-hero { grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; margin-bottom:3rem; }
+        .features-hero-actions { margin-top: 1.5rem !important; }
+        .features-hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+        .fh-divider { display: none; }
+        @media (prefers-reduced-motion: reduce) { .hero * { scroll-behavior:auto !important; } }
+        @media (max-width: 820px) {
+            .hero { grid-template-columns: minmax(0, 1fr); width: min(100% - 2rem, 760px); gap: 2.5rem; }
+            .hero-content { max-width: none; }
+            .hero .typewriter { max-width: 16ch; font-size: clamp(2.8rem, 9vw, 4.4rem); }
+            .sw-wrapper { justify-self: center; }
+            .boards-section, .feature-band { width: min(100% - 2rem, 760px); }
+            .features-hero { grid-template-columns:minmax(0,1fr); }
+            .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 560px) {
+            .boards-grid, .features-grid, .features-hero-stats { grid-template-columns: minmax(0, 1fr); }
+            .hero-actions { align-items: stretch; }
+            .hero-actions .play-btn { width: 100%; }
+        }
+    </style>
 </head>
 <body>
     <!-- Page loader -->
@@ -77,9 +130,7 @@ if (isset($_SESSION['user_id'])) {
             <div class="nav-links">
                 <a href="#boards">Boards</a>
                 <a href="#features">Features</a>
-                <a href="#app">App</a>
-                <a href="#subscriptions">Plans</a>
-                <a href="#privacy">Privacy</a>
+                <a href="#faq">FAQs</a>
                 <a href="#faq">FAQ</a>
             </div>
             <div class="icon-links">
@@ -110,9 +161,7 @@ if (isset($_SESSION['user_id'])) {
         <nav class="mobile-drawer-links">
             <a href="#boards"><i class="fa-solid fa-graduation-cap"></i> Boards</a>
             <a href="#features"><i class="fa-solid fa-wand-magic-sparkles"></i> Features</a>
-            <a href="#app"><i class="fa-solid fa-mobile-screen"></i> App</a>
-            <a href="#subscriptions"><i class="fa-solid fa-clipboard-list"></i> Plans</a>
-            <a href="#privacy"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+            <a href="#faq"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Browse FAQs</a>
             <a href="#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
         </nav>
         <div class="mobile-drawer-actions">
@@ -134,7 +183,7 @@ if (isset($_SESSION['user_id'])) {
                     Master every board,<br>
                     <span class="typewriter-text"></span><span class="typewriter-caret">▌</span>
                 </h1>
-                <p class="hero-copy"><strong>EduMate</strong> turns your notes into playful flashcards, hosts group study rooms, and keeps you on track with a tiny pomodoro timer that doesn't yell at you. Built for students across all major Indian boards.</p>
+                <p class="hero-copy"><strong>EduMate</strong> turns your notes into flashcards, brings classmates together in study rooms, and helps you stay focused. Made for students across India’s major school boards.</p>
                 <div class="study-tabs">
                     <button class="study-tab active" type="button"><i class="fa-solid fa-layer-group"></i> Flashcards</button>
                     <button class="study-tab" type="button"><i class="fa-solid fa-headphones"></i> Study Rooms</button>
@@ -382,18 +431,15 @@ if (isset($_SESSION['user_id'])) {
                     <h2>Everything a modern study platform needs.</h2>
                     <p class="section-sub">From flashcards to focus timers, EduMate bundles the essentials every student and study group relies on — built on a foundation of trust.</p>
                     <div class="features-hero-actions" style="margin-top: 3rem;">
-                        <a href="#" class="btn primary"><i class="fa-solid fa-rocket"></i> Start free</a>
-                        <a href="#" class="btn secondary"><i class="fa-solid fa-circle-play"></i> Watch demo</a>
+                        <a href="register.php" class="btn primary"><i class="fa-solid fa-rocket"></i> Start free</a>
+                        <a href="#boards" class="btn secondary"><i class="fa-solid fa-graduation-cap"></i> Browse boards</a>
                     </div>
                 </div>
-                <div class="features-hero-stats">
-                    <div class="fh-stat"><strong data-counter="4">0</strong><span>K+</span><em>Enrolled Students</em></div>
-                    <div class="fh-divider"></div>
-                    <div class="fh-stat"><strong data-counter="120">0</strong><span>+</span><em>Courses Offered</em></div>
-                    <div class="fh-divider"></div>
-                    <div class="fh-stat"><strong data-counter="99">0</strong><span>%</span><em>Completion Rate</em></div>
-                    <div class="fh-divider"></div>
-                    <div class="fh-stat"><strong data-counter="35">0</strong><span>K+</span><em>Hours of Content</em></div>
+                <div class="features-hero-stats" aria-label="Study tools">
+                    <div class="fh-stat"><strong><i class="fa-solid fa-layer-group" aria-hidden="true"></i></strong><em>Flashcards</em></div>
+                    <div class="fh-stat"><strong><i class="fa-solid fa-stopwatch" aria-hidden="true"></i></strong><em>Focus sessions</em></div>
+                    <div class="fh-stat"><strong><i class="fa-solid fa-users" aria-hidden="true"></i></strong><em>Group study</em></div>
+                    <div class="fh-stat"><strong><i class="fa-solid fa-note-sticky" aria-hidden="true"></i></strong><em>Shared notes</em></div>
                 </div>
             </div>
 
@@ -452,108 +498,6 @@ if (isset($_SESSION['user_id'])) {
                         <div class="calc-result-stat"><span>Pomodoro Rhythm</span><strong id="planPomodoro">4 × 25 min</strong></div>
                         <div class="calc-result-stat"><span>Daily XP Target</span><strong id="planXP">200 XP</strong></div>
                         <div class="calc-result-stat"><span>Weekly Goal</span><strong id="planGoal">12 sessions</strong></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- App Download Section -->
-        <section class="app-download-section reveal" id="app">
-            <div class="app-download-inner">
-                <div class="app-download-text">
-                    <p class="eyebrow" style="--accent:var(--coral);"><i class="fa-solid fa-mobile-screen"></i> Study on the go</p>
-                    <h2>Your pocket<br><span class="highlight highlight--pink">study buddy</span></h2>
-                    <p class="section-sub">Flashcards, quizzes, focus timers, and live study rooms — all in your pocket. Available free on Android and iOS.</p>
-                    <ul class="app-feature-list">
-                        <li><i class="fa-solid fa-circle-check"></i> Offline flashcard access — study without Wi-Fi</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Push notifications for streak reminders</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Sync progress across all your devices</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Dark mode &amp; dyslexia-friendly fonts</li>
-                    </ul>
-                    <div class="app-download-btns">
-                        <a href="#" class="app-store-btn" aria-label="Download on the App Store">
-                            <i class="fa-brands fa-apple"></i>
-                            <div>
-                                <small>Download on the</small>
-                                <strong>App Store</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="app-store-btn app-store-btn--android" aria-label="Get it on Google Play">
-                            <i class="fa-brands fa-google-play"></i>
-                            <div>
-                                <small>Get it on</small>
-                                <strong>Google Play</strong>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="app-rating-row">
-                        <div class="app-rating-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                        </div>
-                        <span>4.8 · 12,000+ reviews</span>
-                        <span class="app-rating-sep">·</span>
-                        <span>50K+ downloads</span>
-                    </div>
-                </div>
-                <div class="app-download-visual">
-                    <div class="app-chip app-chip--tl"><span><i class="fa-solid fa-fire" style="color:var(--coral);"></i></span> 7-day streak!</div>
-                    <div class="app-chip app-chip--tr"><span><i class="fa-solid fa-star" style="color:var(--amber);"></i></span> 2,400 XP</div>
-                    <div class="app-chip app-chip--bl"><span><i class="fa-solid fa-book-open" style="color:var(--teal);"></i></span> 120 cards done</div>
-                    <div class="app-chip app-chip--br"><span><i class="fa-solid fa-stopwatch" style="color:var(--violet);"></i></span> Focus on!</div>
-
-                    <div class="app-phone">
-                        <div class="app-phone__frame">
-                            <div class="app-phone__notch"></div>
-                            <div class="app-phone__screen">
-                                <div class="app-screen-status">
-                                    <span>9:41</span>
-                                    <div class="app-screen-status__icons">
-                                        <i class="fa-solid fa-signal"></i>
-                                        <i class="fa-solid fa-wifi"></i>
-                                        <i class="fa-solid fa-battery-full"></i>
-                                    </div>
-                                </div>
-                                <div class="app-screen-header">
-                                    <div class="app-screen-logo">
-                                        <svg viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="14" fill="#5b43d6"/><path d="M18 20L32 28L46 20M18 20V44L32 52L46 44V20M32 28V52" stroke="white" stroke-width="3" stroke-linejoin="round"/><circle cx="32" cy="20" r="4" fill="white"/></svg>
-                                    </div>
-                                    <span>EduMate</span>
-                                    <div class="app-screen-notif"><i class="fa-solid fa-bell"></i><span class="app-notif-dot"></span></div>
-                                </div>
-                                <div class="app-screen-streak">
-                                    <span style="color:var(--coral);"><i class="fa-solid fa-fire"></i></span>
-                                    <div>
-                                        <strong>7-day streak!</strong>
-                                        <em>Keep it up — you're on fire</em>
-                                    </div>
-                                    <span class="app-streak-badge">+50 XP</span>
-                                </div>
-                                <div class="app-screen-section-label">Today's Plan</div>
-                                <div class="app-screen-tasks">
-                                    <div class="app-task app-task--done">
-                                        <span class="app-task__icon" style="background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green);"><i class="fa-solid fa-check"></i></span>
-                                        <div><strong>Flashcards</strong><em>20 cards · CBSE Science</em></div>
-                                        <span class="app-task__xp">+40 XP</span>
-                                    </div>
-                                    <div class="app-task">
-                                        <span class="app-task__icon" style="background:color-mix(in srgb,var(--violet) 15%,transparent);color:var(--violet);"><i class="fa-solid fa-brain"></i></span>
-                                        <div><strong>Quiz</strong><em>10 questions · Maths</em></div>
-                                        <span class="app-task__xp">+60 XP</span>
-                                    </div>
-                                    <div class="app-task">
-                                        <span class="app-task__icon" style="background:color-mix(in srgb,var(--coral) 15%,transparent);color:var(--coral);"><i class="fa-solid fa-stopwatch"></i></span>
-                                        <div><strong>Focus Session</strong><em>25 min Pomodoro</em></div>
-                                        <span class="app-task__xp">+25 XP</span>
-                                    </div>
-                                </div>
-                                <div class="app-screen-nav">
-                                    <button class="app-nav-item app-nav-item--active"><i class="fa-solid fa-house"></i><span>Home</span></button>
-                                    <button class="app-nav-item"><i class="fa-solid fa-layer-group"></i><span>Cards</span></button>
-                                    <button class="app-nav-item"><i class="fa-solid fa-users"></i><span>Rooms</span></button>
-                                    <button class="app-nav-item"><i class="fa-solid fa-chart-line"></i><span>Progress</span></button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

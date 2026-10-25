@@ -113,32 +113,41 @@ render_dashboard_header(
     'courses',
     ['Home', 'My Courses']
 );
-?>
+?><style>
+body[data-page] .sidebar{padding:1.25rem 1rem;gap:.35rem} body[data-page] .sidebar .nav-item{min-height:42px;border-radius:12px} body[data-page] .nav-item.active{background:color-mix(in srgb,var(--gradient-primary) 13%,var(--bg-card));color:var(--text-primary)}
+body[data-page] .main{width:min(100%,1680px);margin-inline:auto;padding:clamp(1rem,2.2vw,2rem) clamp(1rem,2.4vw,2.25rem) 3rem} body[data-page] .topbar{align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--border-color);margin-bottom:1.35rem} body[data-page] .topbar h1{font-size:clamp(1.45rem,2vw,1.9rem);line-height:1.25;overflow-wrap:break-word;min-width:0}
+body[data-page] .cards{gap:1rem;margin-bottom:1.25rem} body[data-page] .card{min-height:142px;padding:1.25rem} body[data-page] .card .label{font-size:.75rem;letter-spacing:0;text-transform:none} body[data-page] .card .value{font-size:clamp(1.6rem,2.4vw,2rem);line-height:1.15}
+body[data-page] .panel-grid{gap:1.1rem} body[data-page] .panel{padding:clamp(1rem,1.8vw,1.5rem)} body[data-page] .panel h2{margin-bottom:1rem;font-size:1.12rem;line-height:1.35} body[data-page] .panel h2 .sub{display:inline-block}
+body[data-page] .grid-cards{gap:1rem} body[data-page] .tile{min-width:0;height:100%} body[data-page] .tile .footer{gap:.6rem;flex-wrap:wrap} body[data-page] .btn{min-height:40px;max-width:100%} body[data-page] .form-control{min-height:46px}
+body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem} body[data-page] :where(a,button,input,select,textarea):focus-visible{outline:3px solid var(--gradient-primary);outline-offset:3px}
+@media(max-width:760px){body[data-page] .main{padding:1rem 1rem 2rem} body[data-page] .panel-grid{grid-template-columns:minmax(0,1fr)} body[data-page] .panel-grid>*{min-width:0} body[data-page] .panel{min-width:0;overflow-x:auto} body[data-page] .cards{grid-template-columns:repeat(2,minmax(0,1fr))} body[data-page] table.simple{display:table;width:max-content;min-width:100%}}
+@media(max-width:480px){body[data-page] .cards{grid-template-columns:minmax(0,1fr)} body[data-page] .panel{padding:1rem}}
+</style>
 
 <section class="panel">
-    <form method="GET" action="courses.php" style="display:flex; gap:8px; align-items:center; margin-bottom:18px; flex-wrap: wrap;">
-        <strong style="font-size:14px;">Filter:</strong>
-        <select name="filter" class="form-control" style="width:auto; height:38px;" data-auto-submit>
+    <form method="GET" action="courses.php" class="course-filters">
+        <strong>Filter courses</strong>
+        <select name="filter" class="form-control" data-auto-submit>
             <option value="enrolled"  <?php echo $filter === 'enrolled'  ? 'selected' : ''; ?>>My Enrolled Courses</option>
             <option value="available" <?php echo $filter === 'available' ? 'selected' : ''; ?>>Available to Join</option>
             <option value="all"       <?php echo $filter === 'all'       ? 'selected' : ''; ?>>All Courses</option>
         </select>
         
-        <select name="class" class="form-control" style="width:auto; height:38px;" data-auto-submit>
+        <select name="class" class="form-control" data-auto-submit>
             <option value="all" <?php echo $filterClass === 'all' ? 'selected' : ''; ?>>All Classes</option>
             <?php for ($c = 5; $c <= 10; $c++): ?>
                 <option value="<?php echo $c; ?>" <?php echo (($filterClass !== 'all' && $filterClass !== 'default' && (int)$filterClass === $c) || ($filterClass === 'default' && $studentClass === $c)) ? 'selected' : ''; ?>>Class <?php echo $c; ?></option>
             <?php endfor; ?>
         </select>
 
-        <select name="board" class="form-control" style="width:auto; height:38px;" data-auto-submit>
+        <select name="board" class="form-control" data-auto-submit>
             <option value="all" <?php echo $filterBoard === 'all' ? 'selected' : ''; ?>>All Boards</option>
             <?php foreach (get_all_boards() as $b): ?>
                 <option value="<?php echo htmlspecialchars($b, ENT_QUOTES); ?>" <?php echo (($filterBoard !== 'all' && $filterBoard !== 'default' && $filterBoard === $b) || ($filterBoard === 'default' && $studentBoard === $b)) ? 'selected' : ''; ?>><?php echo htmlspecialchars($b, ENT_QUOTES); ?></option>
             <?php endforeach; ?>
         </select>
 
-        <span style="color:var(--text-light); font-size:13px; margin-left:auto;"><?php echo count($courses); ?> course<?php echo count($courses) === 1 ? '' : 's'; ?></span>
+        <span class="course-count"><?php echo count($courses); ?> course<?php echo count($courses) === 1 ? '' : 's'; ?></span>
     </form>
 
     <?php if (empty($courses)): ?>
@@ -197,5 +206,14 @@ render_dashboard_header(
         </div>
     <?php endif; ?>
 </section>
+
+<style>
+.course-filters { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)) auto; align-items:center; gap:.75rem; margin-bottom:1.25rem; }
+.course-filters > strong { grid-column:1 / -1; color:var(--text-secondary); font-size:.9rem; }
+.course-filters .form-control { width:100%; min-width:0; }
+.course-count { justify-self:end; color:var(--text-light); font-size:.85rem; white-space:nowrap; }
+@media (max-width:760px) { .course-filters { grid-template-columns:repeat(2, minmax(0, 1fr)); } .course-count { justify-self:start; } }
+@media (max-width:480px) { .course-filters { grid-template-columns:minmax(0, 1fr); } }
+</style>
 
 <?php render_dashboard_footer(); ?>

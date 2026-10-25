@@ -81,7 +81,16 @@ render_dashboard_header(
     ['Home', 'Overview'],
     'Dashboard'
 );
-?>
+?><style>
+body[data-page] .sidebar{padding:1.25rem 1rem;gap:.35rem} body[data-page] .sidebar .nav-item{min-height:42px;border-radius:12px} body[data-page] .nav-item.active{background:color-mix(in srgb,var(--gradient-primary) 13%,var(--bg-card));color:var(--text-primary)}
+body[data-page] .main{width:min(100%,1680px);margin-inline:auto;padding:clamp(1rem,2.2vw,2rem) clamp(1rem,2.4vw,2.25rem) 3rem} body[data-page] .topbar{align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--border-color);margin-bottom:1.35rem} body[data-page] .topbar h1{font-size:clamp(1.45rem,2vw,1.9rem);line-height:1.25;overflow-wrap:break-word;min-width:0}
+body[data-page] .cards{gap:1rem;margin-bottom:1.25rem} body[data-page] .card{min-height:142px;padding:1.25rem} body[data-page] .card .label{font-size:.75rem;letter-spacing:0;text-transform:none} body[data-page] .card .value{font-size:clamp(1.6rem,2.4vw,2rem);line-height:1.15}
+body[data-page] .panel-grid{gap:1.1rem} body[data-page] .panel{padding:clamp(1rem,1.8vw,1.5rem)} body[data-page] .panel h2{margin-bottom:1rem;font-size:1.12rem;line-height:1.35} body[data-page] .panel h2 .sub{display:inline-block}
+body[data-page] .grid-cards{gap:1rem} body[data-page] .tile{min-width:0;height:100%} body[data-page] .tile .footer{gap:.6rem;flex-wrap:wrap} body[data-page] .btn{min-height:40px;max-width:100%} body[data-page] .form-control{min-height:46px}
+body[data-page] .simple th{text-transform:none;letter-spacing:0;font-size:.78rem} body[data-page] :where(a,button,input,select,textarea):focus-visible{outline:3px solid var(--gradient-primary);outline-offset:3px}
+@media(max-width:760px){body[data-page] .main{padding:1rem 1rem 2rem} body[data-page] .panel-grid{grid-template-columns:minmax(0,1fr)} body[data-page] .panel-grid>*{min-width:0} body[data-page] .panel{min-width:0;overflow-x:auto} body[data-page] .cards{grid-template-columns:repeat(2,minmax(0,1fr))} body[data-page] table.simple{display:table;width:max-content;min-width:100%}}
+@media(max-width:480px){body[data-page] .cards{grid-template-columns:minmax(0,1fr)} body[data-page] .panel{padding:1rem}}
+</style>
 
 <section class="cards">
     <div class="card">
@@ -106,24 +115,33 @@ render_dashboard_header(
         <div class="ico"><ion-icon name="flame-outline"></ion-icon></div>
         <div class="label">Streak Days</div>
         <div class="value"><?php echo $streakDays; ?></div>
-        <div class="delta">+1 today</div>
+        <div class="delta">Keep it going</div>
     </div>
 </section>
 
 <!-- AI Flashcards Quick Banner -->
-<section class="panel" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #fff; margin-bottom: 20px; border: 1px solid #4338ca;">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+<section class="panel student-revision-panel">
+    <div class="student-revision-content">
         <div>
-            <h2 style="font-family:'Bodoni Moda', Georgia, serif; color:#fff; margin:0 0 6px 0; font-size:20px; font-weight:700; display:flex; align-items:center; gap:10px;">
-                <ion-icon name="card-outline" style="color:#a5b4fc;"></ion-icon> AI Interactive Flashcards
+            <h2 class="student-revision-title">
+                <ion-icon name="card-outline" aria-hidden="true"></ion-icon> AI Interactive Flashcards
             </h2>
-            <p style="color:#c7d2fe; font-size:13px; margin:0;"><?php echo $bannerDetailText; ?></p>
+            <p class="student-revision-copy"><?php echo $bannerDetailText; ?></p>
         </div>
-        <a href="flashcards.php" class="btn" style="background:#4f46e5; color:#fff; font-weight:600; border:none; padding:10px 20px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+        <a href="flashcards.php" class="btn btn-primary">
             <ion-icon name="flash-outline"></ion-icon> Start Revision
         </a>
     </div>
 </section>
+
+<style>
+.student-revision-panel { border-left: 4px solid var(--gradient-primary); box-shadow: var(--shadow-xs); }
+.student-revision-content { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.student-revision-title { display:flex; align-items:center; gap:.65rem; margin:0 0 .4rem !important; }
+.student-revision-title ion-icon { color:var(--gradient-primary); }
+.student-revision-copy { color:var(--text-secondary); font-size:.9rem; margin:0; }
+@media (max-width:560px) { .student-revision-content > .btn { width:100%; } }
+</style>
 
 <div class="panel-grid">
     <section class="panel">
