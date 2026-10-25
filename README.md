@@ -27,7 +27,6 @@
 - [10. Database Migration & Seeding](#10-database-migration--seeding)
 - [11. Frontend Architecture](#11-frontend-architecture)
 - [12. Configuration Reference](#12-configuration-reference)
-- [13. Scripts & Utilities](#13-scripts--utilities)
 
 ---
 
@@ -808,21 +807,6 @@ PDO::ATTR_EMULATE_PREPARES   => false  // real prepared statements
 ```
 
 ---
-
-## 13. Scripts & Utilities
-
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| [migrate.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/migrate.php) | Run v1 schema migrations | Browser or CLI: `php scripts/migrate.php` |
-| [migrate_v2.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/migrate_v2.php) | Run v2 schema migrations | Browser or CLI: `php scripts/migrate_v2.php` |
-| [seed.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/seed.php) | Populate demo data | Browser or CLI: `php scripts/seed.php` |
-| [create_admin.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/create_admin.php) | Create an admin account | CLI: `php scripts/create_admin.php` |
-| [e2e_test.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/e2e_test.php) | End-to-end test runner | Browser or CLI |
-| [smoke_check.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/smoke_check.php) | Quick system health check | Browser |
-| [check_live.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/scripts/check_live.php) | Check live session status | Browser or CLI |
-
-> [!WARNING]
-> **Delete or restrict access to scripts/ in production!** These files contain admin-level operations and should never be publicly accessible on a live server.
 
 ---
 
