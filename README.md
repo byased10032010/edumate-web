@@ -57,24 +57,17 @@
 
 ### Project Screenshots
 
-#### 🌐 Public & Authentication
-| Landing Page | Login & Authentication |
+| Student Dashboard | AI Flashcards |
 |:---:|:---:|
-| ![Landing Page](assets/img/screenshots/landing_page.png) | ![Login Portal](assets/img/screenshots/login_page.png) |
+| ![Student Dashboard](assets/img/screenshots/Screenshot%20(2).png) | ![AI Flashcards](assets/img/screenshots/Screenshot%20(3).png) |
 
-#### 🎓 Student Portal & AI Learning Tools
-| Student Dashboard | AI Doubt Solver & Tutor |
+| AI Study Suggestions | Quizzes & Assessments |
 |:---:|:---:|
-| ![Student Dashboard](assets/img/screenshots/student_dashboard.png) | ![AI Tutor](assets/img/screenshots/ai_tutor.png) |
+| ![AI Study Suggestions](assets/img/screenshots/Screenshot%20(4).png) | ![Quizzes & Assessments](assets/img/screenshots/Screenshot%20(5).png) |
 
-| AI Flashcard Generator |
+| Live Interactive Classes |
 |:---:|
-| ![AI Flashcards](assets/img/screenshots/ai_flashcards.png) |
-
-#### 👨‍🏫 Management & Administration
-| Teacher Dashboard | Admin Control Center |
-|:---:|:---:|
-| ![Teacher Dashboard](assets/img/screenshots/teacher_dashboard.png) | ![Admin Dashboard](assets/img/screenshots/admin_dashboard.png) |
+| ![Live Interactive Classes](assets/img/screenshots/Screenshot%20(1).png) |
 
 ---
 
