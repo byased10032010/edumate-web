@@ -65,10 +65,6 @@
 |:---:|:---:|
 | ![AI Study Suggestions](assets/img/screenshots/Screenshot%20(4).png) | ![Quizzes & Assessments](assets/img/screenshots/Screenshot%20(5).png) |
 
-| Live Interactive Classes |
-|:---:|
-| ![Live Interactive Classes](assets/img/screenshots/Screenshot%20(1).png) |
-
 ---
 
 ## 2. Technology Stack
