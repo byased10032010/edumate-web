@@ -96,7 +96,7 @@ eduMate/
 ├── logout.php                # Session termination
 ├── style.css                 # Global stylesheet (~180KB)
 ├── script.js                 # Global JavaScript (~60KB)
-├── database.sql              # Full schema dump (production)
+├── edumate.sql              # Full schema dump (production)
 │
 ├── config/
 │   └── db.php                # Database connection (PDO)
