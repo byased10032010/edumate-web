@@ -56,13 +56,17 @@
 
 ### Project Screenshots
 
-| Student Dashboard | AI Flashcards |
+| Landing Page | Student Dashboard |
 |:---:|:---:|
-| ![Student Dashboard](assets/img/screenshots/Screenshot%20(2).png) | ![AI Flashcards](assets/img/screenshots/Screenshot%20(3).png) |
+| ![Landing Page](assets/screenshots/landing_page.png) | ![Student Dashboard](assets/screenshots/student_dashboard.png) |
 
-| AI Study Suggestions | Quizzes & Assessments |
+| Boards Directory | AI Interactive Flashcards |
 |:---:|:---:|
-| ![AI Study Suggestions](assets/img/screenshots/Screenshot%20(4).png) | ![Quizzes & Assessments](assets/img/screenshots/Screenshot%20(5).png) |
+| ![Boards Directory](assets/screenshots/boards_directory.png) | ![AI Interactive Flashcards](assets/screenshots/ai_flashcards.png) |
+
+| Weekly Performance Report |
+|:---:|
+| ![Weekly Performance Report](assets/screenshots/weekly_report.png) |
 
 ---
 
