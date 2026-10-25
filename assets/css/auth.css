@@ -317,29 +317,35 @@ a:hover { color: var(--gradient-secondary); }
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 22px 0;
+    margin: 22px 0 18px;
     color: var(--text-light);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .08em;
+    font-weight: 600;
 }
 .divider::before,
 .divider::after {
     content: "";
     flex: 1;
-    height: 1px;
+    height: 1.5px;
     background: var(--border-color);
+}
+.divider span {
+    padding: 0 4px;
+    opacity: 0.85;
 }
 
 .social-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
+    margin-bottom: 6px;
 }
 .btn-social {
-    height: 44px;
+    height: 46px;
     border-radius: 12px;
-    border: 1.5px solid var(--border-color);
+    border: 2px solid var(--text-primary);
     background: var(--bg-card);
     color: var(--text-primary);
     font-family: inherit;
@@ -349,11 +355,57 @@ a:hover { color: var(--gradient-secondary); }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    transition: border-color .2s ease, background .2s ease;
+    gap: 10px;
+    box-shadow: 3px 3px 0 0 var(--text-primary);
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
 }
-.btn-social:hover { border-color: var(--text-primary); background: var(--bg-secondary); }
-.btn-social i { color: var(--text-primary); }
+.btn-social:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 var(--text-primary);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+.btn-social:active {
+    transform: translate(0, 0);
+    box-shadow: 1px 1px 0 0 var(--text-primary);
+}
+.btn-social .social-icon {
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-social:hover .social-icon {
+    transform: scale(1.15);
+}
+
+.btn-social.btn-google:hover {
+    background: #ffffff;
+}
+.btn-social.btn-facebook:hover {
+    background: #f4f8ff;
+}
+
+html[data-theme="dark"] .btn-social {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--border-color);
+    box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+}
+html[data-theme="dark"] .btn-social:hover {
+    border-color: var(--gradient-primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+}
+html[data-theme="dark"] .btn-social.btn-google:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+html[data-theme="dark"] .btn-social.btn-facebook:hover {
+    background: rgba(24, 119, 242, 0.15);
+}
 
 /* ============================================
    ROLE PICKER

@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/auth.css?v=7">
+    <link rel="stylesheet" href="assets/css/auth.css?v=9">
     <link rel="stylesheet" href="assets/css/theme-switch.css?v=6">
 </head>
 <body>
@@ -221,6 +221,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <ion-icon name="log-in-outline"></ion-icon> Sign In
                 </button>
 
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="social-row">
+                    <a href="oauth.php?provider=google&action=login" class="btn-social btn-google" id="btn-oauth-google" aria-label="Sign in with Google">
+                        <svg class="social-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.27-2.09 3.675-5.17 3.675-9.15z"/>
+                            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.26 21.36 7.33 24 12 24z"/>
+                            <path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.28C.46 8.23 0 10.06 0 12s.46 3.77 1.28 5.39l3.99-3.15z"/>
+                            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                        </svg>
+                        <span>Google</span>
+                    </a>
+                    <a href="oauth.php?provider=facebook&action=login" class="btn-social btn-facebook" id="btn-oauth-facebook" aria-label="Sign in with Facebook">
+                        <svg class="social-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                            <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        <span>Facebook</span>
+                    </a>
+                </div>
 
                 <p class="auth-foot">
                     New to EduMate? <a href="register.php">Create an account</a>
