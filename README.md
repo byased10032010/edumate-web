@@ -8,6 +8,7 @@
 ## Table of Contents
 
 - [1. Project Overview](#1-project-overview)
+  - [Project Screenshots](#project-screenshots)
 - [2. Technology Stack](#2-technology-stack)
 - [3. Directory Structure](#3-directory-structure)
 - [4. Installation & Setup](#4-installation--setup)
@@ -54,6 +55,27 @@
 - **Teachers**: Educators managing courses, quizzes, assignments, and live sessions
 - **Administrators**: Platform managers overseeing users, security, and system health
 
+### Project Screenshots
+
+#### 🌐 Public & Authentication
+| Landing Page | Login & Authentication |
+|:---:|:---:|
+| ![Landing Page](assets/img/screenshots/landing_page.png) | ![Login Portal](assets/img/screenshots/login_page.png) |
+
+#### 🎓 Student Portal & AI Learning Tools
+| Student Dashboard | AI Doubt Solver & Tutor |
+|:---:|:---:|
+| ![Student Dashboard](assets/img/screenshots/student_dashboard.png) | ![AI Tutor](assets/img/screenshots/ai_tutor.png) |
+
+| AI Flashcard Generator |
+|:---:|
+| ![AI Flashcards](assets/img/screenshots/ai_flashcards.png) |
+
+#### 👨‍🏫 Management & Administration
+| Teacher Dashboard | Admin Control Center |
+|:---:|:---:|
+| ![Teacher Dashboard](assets/img/screenshots/teacher_dashboard.png) | ![Admin Dashboard](assets/img/screenshots/admin_dashboard.png) |
+
 ---
 
 ## 2. Technology Stack
@@ -85,7 +107,7 @@ eduMate/
 ├── database.sql              # Full schema dump (production)
 │
 ├── config/
-│   └── db.php                # DB connection (PDO) + AI API key
+│   └── db.php                # Database connection (PDO)
 │
 ├── includes/
 │   ├── auth.php              # Session, CSRF, login/logout, role guards, streaks
@@ -236,14 +258,7 @@ This creates demo accounts:
 | Teacher | `vikram.iyer@edumate.local` | `Teacher@123` |
 | Student | `subhrajit@edumate.local` | `Student@123` |
 
-**6. Configure AI (optional)**
-
-Edit [db.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/config/db.php) and set `AI_API_KEY` to a valid Google Gemini API key:
-```php
-const AI_API_KEY = 'your-gemini-api-key-here';
-```
-
-**7. Access the Application**
+**6. Access the Application**
 ```
 http://localhost/WEBPAGE/eduMate/
 ```
@@ -551,7 +566,9 @@ The public-facing homepage includes:
 
 **Location**: [includes/ai_functions.php](file:///c:/xampp/htdocs/WEBPAGE/eduMate/includes/ai_functions.php)
 
-#### Gemini API Integration & Higher Models
+#### Gemini API Integration
+
+The platform integrates the Google Gemini API with multimodal input support (text and images), automatic retry backoff, and model fallback for high availability.
 
 ```php
 function call_gemini_api(
@@ -560,27 +577,6 @@ function call_gemini_api(
     ?string $model = null
 ): string
 ```
-
-**Supported Higher Models**:
-- `gemini-3.6-flash`: High-intelligence reasoning model with deep step-by-step logic (Recommended default).
-- `gemini-3.8-flash`: Cutting-edge next-generation flagship architecture with superior speed and comprehension.
-- `gemini-3.5-flash`: High-precision balanced model for assignments, essays, and thorough revision.
-- `gemini-3.1-pro-preview`: Pro-tier reasoning for competitive exams, Olympiad math, and advanced STEM.
-- `gemini-3-flash-preview`: Fast 3.0 multimodal reasoning model.
-- `gemini-2.5-flash`: Proven legacy standard workhorse fallback.
-
-**Intelligent Fallback Cascade**: If any model experiences a quota limit (HTTP 429), high demand surge (HTTP 503), or deprecation, the engine automatically cascades through higher models in sequence:
-`$requestedModel` → `gemini-3.6-flash` → `gemini-3.5-flash` → `gemini-3-flash-preview` → `gemini-3.8-flash` → `gemini-3.1-pro-preview` → `gemini-2.5-flash`
-
-**Retry Logic**: 3 attempts with exponential backoff (1s, 2s delays) across all models
-
-**Configuration**:
-- Default Model: Set via `AI_MODEL` in `config/db.php` or `ai_model` in `config/site.json` (Admin Settings).
-- Real-time Selection: Dynamic in-app model pickers in AI Tutor and AI Flashcards with persistent `localStorage`.
-- Temperature: `0.2` (deterministic/factual responses)
-- Max output tokens: `8192`
-- SSL verify: disabled (development environment)
-- IPv4 forced resolution
 
 
 #### System Prompts
@@ -802,7 +798,6 @@ Each role has a distinct navigation structure defined in `student_nav()`, `teach
 | `DB_NAME` | `'edumate'` | Database name |
 | `DB_USER` | `'root'` | MySQL username |
 | `DB_PASS` | `''` | MySQL password (empty for XAMPP default) |
-| `AI_API_KEY` | `'...'` | Google Gemini API key |
 
 ### Connection Strategy
 
