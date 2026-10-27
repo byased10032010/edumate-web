@@ -23,7 +23,7 @@ if (!in_array($provider, ['google', 'facebook'], true)) {
 }
 
 $action = strtolower(trim((string)($_GET['action'] ?? 'login')));
-$requestedRole = in_array(($_GET['role'] ?? ''), ['student', 'teacher'], true) ? $_GET['role'] : 'student';
+$requestedRole = in_array(($_GET['role'] ?? ''), ['student', 'teacher'], true) ? (string)$_GET['role'] : '';
 
 // Load config
 $oauthConfig = [];
