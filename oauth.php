@@ -2,8 +2,8 @@
 /**
  * EduMate - OAuth Handler (Google & Facebook)
  * 
- * Supports both live OAuth 2.0 flows and an interactive simulation mode
- * for seamless developer testing when API credentials are not yet configured.
+ * Supports both live OAuth 2.0 flows and fallback simulation
+ * when credentials are not yet configured.
  */
 
 declare(strict_types=1);
@@ -26,12 +26,18 @@ $action = strtolower(trim((string)($_GET['action'] ?? 'login')));
 $requestedRole = in_array(($_GET['role'] ?? ''), ['student', 'teacher'], true) ? $_GET['role'] : 'student';
 
 // Load config
-$oauthConfigFile = __DIR__ . '/config/oauth.php';
-$oauthConfig = file_exists($oauthConfigFile) ? require $oauthConfigFile : [];
+$oauthConfig = [];
+if (file_exists(__DIR__ . '/config/oauth.local.php')) {
+    $oauthConfig = require __DIR__ . '/config/oauth.local.php';
+} elseif (file_exists(__DIR__ . '/config/oauth.php')) {
+    $oauthConfig = require __DIR__ . '/config/oauth.php';
+} elseif (file_exists(__DIR__ . '/config/oauth.example.php')) {
+    $oauthConfig = require __DIR__ . '/config/oauth.example.php';
+}
 $providerConfig = $oauthConfig[$provider] ?? [];
 
-$clientId = trim((string)($provider === 'google' ? ($providerConfig['client_id'] ?? '') : ($providerConfig['app_id'] ?? '')));
-$clientSecret = trim((string)($provider === 'google' ? ($providerConfig['client_secret'] ?? '') : ($providerConfig['app_secret'] ?? '')));
+$clientId = trim((string)($provider === 'google' ? ($providerConfig['client_id'] ?? getenv('GOOGLE_CLIENT_ID') ?: '') : ($providerConfig['app_id'] ?? getenv('FB_APP_ID') ?: '')));
+$clientSecret = trim((string)($provider === 'google' ? ($providerConfig['client_secret'] ?? getenv('GOOGLE_CLIENT_SECRET') ?: '') : ($providerConfig['app_secret'] ?? getenv('FB_APP_SECRET') ?: '')));
 
 // Helper: Handle final user authentication and database persistence
 function completeOAuthLogin(string $email, string $fullName, string $role, ?string $avatar, string $provider): void
@@ -46,6 +52,14 @@ function completeOAuthLogin(string $email, string $fullName, string $role, ?stri
                 flash_set('error', 'Your account has been deactivated. Please contact support.');
                 header('Location: login.php');
                 exit;
+            }
+            if (!empty($avatar)) {
+                try {
+                    db()->prepare('UPDATE users SET avatar = :avatar WHERE id = :id')->execute([
+                        ':avatar' => $avatar,
+                        ':id'     => $user['id'],
+                    ]);
+                } catch (Throwable $e) {}
             }
         } else {
             // New user registration via OAuth
@@ -95,9 +109,10 @@ function completeOAuthLogin(string $email, string $fullName, string $role, ?stri
 // 1. LIVE OAUTH: Handle Callback if "code" query param is set
 // -------------------------------------------------------------
 if (!empty($_GET['code'])) {
-    $code = (string)$_GET['code'];
-    // In live OAuth, exchange token via cURL
-    // [Omitted if keys are empty]
+    if ($provider === 'google') {
+        require __DIR__ . '/oauth2callback.php';
+        exit;
+    }
 }
 
 // -------------------------------------------------------------
@@ -107,12 +122,14 @@ if ($clientId !== '' && $clientSecret !== '' && !isset($_GET['demo'])) {
     $state = bin2hex(random_bytes(16));
     $_SESSION['oauth_state'] = $state;
     $_SESSION['oauth_role'] = $requestedRole;
-    $redirectUri = urlencode($providerConfig['redirect_uri'] ?? '');
+    $_SESSION['oauth_provider'] = $provider;
+    $redirectUri = $providerConfig['redirect_uri'] ?? '';
+    $_SESSION['oauth_redirect_uri'] = $redirectUri;
 
     if ($provider === 'google') {
         $authUrl = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
             'client_id'     => $clientId,
-            'redirect_uri'  => $providerConfig['redirect_uri'],
+            'redirect_uri'  => $redirectUri,
             'response_type' => 'code',
             'scope'         => 'openid email profile',
             'state'         => $state,
@@ -123,7 +140,7 @@ if ($clientId !== '' && $clientSecret !== '' && !isset($_GET['demo'])) {
     } elseif ($provider === 'facebook') {
         $authUrl = "https://www.facebook.com/v18.0/dialog/oauth?" . http_build_query([
             'client_id'     => $clientId,
-            'redirect_uri'  => $providerConfig['redirect_uri'],
+            'redirect_uri'  => $redirectUri,
             'state'         => $state,
             'scope'         => 'email,public_profile',
         ]);
@@ -133,7 +150,7 @@ if ($clientId !== '' && $clientSecret !== '' && !isset($_GET['demo'])) {
 }
 
 // -------------------------------------------------------------
-// 3. SIMULATION / DEMO MODE (Instant 1-Click OAuth Handshake)
+// 3. FALLBACK SIMULATION MODE
 // -------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simulate_oauth'])) {
     $simEmail = trim((string)($_POST['sim_email'] ?? ''));
@@ -141,20 +158,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simulate_oauth'])) {
     $simRole  = in_array($_POST['sim_role'] ?? '', ['student', 'teacher'], true) ? $_POST['sim_role'] : $requestedRole;
 
     if ($simEmail === '') {
-        $simEmail = ($provider === 'google') ? 'demo.google@edumate.io' : 'demo.facebook@edumate.io';
+        $simEmail = ($provider === 'google') ? 'user@gmail.com' : 'user@facebook.com';
     }
     if ($simName === '') {
         $simName = ($provider === 'google') ? 'Google User' : 'Facebook User';
     }
 
     completeOAuthLogin($simEmail, $simName, $simRole, null, $provider);
-}
-
-// Check for direct auto-login via URL (e.g. ?provider=google&auto=1)
-if (isset($_GET['auto']) && $_GET['auto'] === '1') {
-    $autoName = ($provider === 'google') ? 'Alex Morgan' : 'Jordan Taylor';
-    $autoEmail = ($provider === 'google') ? 'alex.morgan@gmail.com' : 'jordan.taylor@facebook.com';
-    completeOAuthLogin($autoEmail, $autoName, $requestedRole, null, $provider);
 }
 
 $providerDisplay = ($provider === 'google') ? 'Google' : 'Facebook';
@@ -196,54 +206,6 @@ $providerDisplay = ($provider === 'google') ? 'Google' : 'Facebook';
             box-shadow: 3px 3px 0 0 var(--text-primary);
             background: var(--bg-card);
         }
-        .account-card {
-            border: 1.5px solid var(--border-color);
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .account-card:hover {
-            border-color: var(--text-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .account-card.selected {
-            border-color: var(--gradient-primary);
-            background: rgba(124, 92, 255, 0.08);
-        }
-        .account-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-weight: 700;
-            color: #fff;
-            margin-right: 14px;
-            flex-shrink: 0;
-        }
-        .guide-box {
-            background: rgba(124, 92, 255, 0.06);
-            border-left: 3px solid var(--gradient-primary);
-            padding: 12px 14px;
-            border-radius: 0 10px 10px 0;
-            font-size: 13px;
-            margin-top: 20px;
-            color: var(--text-secondary);
-        }
-        .guide-box code {
-            background: var(--bg-card);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 12px;
-            border: 1px solid var(--border-color);
-        }
     </style>
 </head>
 <body>
@@ -277,62 +239,33 @@ $providerDisplay = ($provider === 'google') ? 'Google' : 'Facebook';
             </div>
             <h2 style="font-size: 24px; margin-bottom: 6px;">Sign in with <?php echo $providerDisplay; ?></h2>
             <p style="color: var(--text-secondary); font-size: 14px;">
-                Choose an account to continue to <strong>EduMate</strong>
+                Enter your details to sign in with <?php echo $providerDisplay; ?>
             </p>
         </div>
 
         <form method="POST" action="oauth.php?provider=<?php echo urlencode($provider); ?>" id="oauthForm">
             <input type="hidden" name="simulate_oauth" value="1">
-            <input type="hidden" name="sim_name" id="sim_name" value="<?php echo ($provider === 'google') ? 'Alex Morgan' : 'Jordan Taylor'; ?>">
-            <input type="hidden" name="sim_email" id="sim_email" value="<?php echo ($provider === 'google') ? 'alex.morgan@gmail.com' : 'jordan.taylor@facebook.com'; ?>">
-            <input type="hidden" name="sim_role" id="sim_role" value="<?php echo htmlspecialchars($requestedRole, ENT_QUOTES); ?>">
-
-            <!-- Option 1: Student Account -->
-            <div class="account-card selected" onclick="pickAccount('Alex Morgan', 'alex.morgan@gmail.com', 'student', this)">
-                <div style="display: flex; align-items: center;">
-                    <div class="account-avatar" style="background: linear-gradient(135deg, #7c5cff, #2dd4bf);">A</div>
-                    <div>
-                        <div style="font-weight: 600; font-size: 14px; color: var(--text-primary);">Alex Morgan</div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">alex.morgan@gmail.com</div>
-                    </div>
-                </div>
-                <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(124,92,255,0.15); color: var(--gradient-primary);">Student</span>
+            <div style="margin-bottom: 14px; text-align: left;">
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Full Name</label>
+                <input type="text" name="sim_name" required placeholder="Your full name" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
             </div>
-
-            <!-- Option 2: Teacher Account -->
-            <div class="account-card" onclick="pickAccount('Dr. Taylor', 'dr.taylor@gmail.com', 'teacher', this)">
-                <div style="display: flex; align-items: center;">
-                    <div class="account-avatar" style="background: linear-gradient(135deg, #ff5d8f, #ffc83d);">T</div>
-                    <div>
-                        <div style="font-weight: 600; font-size: 14px; color: var(--text-primary);">Dr. Taylor</div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">dr.taylor@gmail.com</div>
-                    </div>
-                </div>
-                <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(255,93,143,0.15); color: var(--gradient-secondary);">Teacher</span>
+            <div style="margin-bottom: 14px; text-align: left;">
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Email Address</label>
+                <input type="email" name="sim_email" required placeholder="your.email@example.com" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
             </div>
-
-            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 14px;">
+            <div style="margin-bottom: 18px; text-align: left;">
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Account Role</label>
+                <select name="sim_role" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
+                    <option value="student" <?php echo ($requestedRole === 'student') ? 'selected' : ''; ?>>Student</option>
+                    <option value="teacher" <?php echo ($requestedRole === 'teacher') ? 'selected' : ''; ?>>Teacher</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
                 Continue with <?php echo $providerDisplay; ?>
             </button>
         </form>
-
-        <div class="guide-box">
-            <strong><ion-icon name="information-circle-outline"></ion-icon> Developer Notice:</strong>
-            <p style="margin-top: 4px; font-size: 12px;">
-                OAuth simulation is active. To connect live credentials, configure <code>client_id</code> and <code>client_secret</code> in <code>config/oauth.php</code>.
-            </p>
-        </div>
     </main>
 
-    <script>
-        function pickAccount(name, email, role, el) {
-            document.querySelectorAll('.account-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            document.getElementById('sim_name').value = name;
-            document.getElementById('sim_email').value = email;
-            document.getElementById('sim_role').value = role;
-        }
-    </script>
     <script src="assets/js/theme-toggle.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

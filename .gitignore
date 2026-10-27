@@ -4,6 +4,9 @@
 !.env.example
 /auth/forgot_password.php
 config/db.php
+config/oauth.php
+config/oauth.local.php
+!config/oauth.example.php
 
 # Dependencies and local tooling
 /vendor/
