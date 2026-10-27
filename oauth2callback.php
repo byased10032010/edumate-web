@@ -298,6 +298,7 @@ $boards = get_all_boards();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/auth.css?v=10">
+    <link rel="stylesheet" href="assets/css/custom-select.css?v=5">
     <link rel="stylesheet" href="assets/css/theme-switch.css?v=6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -336,12 +337,12 @@ $boards = get_all_boards();
         }
         .role-option-card {
             border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px 16px;
+            border-radius: 18px;
+            padding: 22px 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -349,30 +350,42 @@ $boards = get_all_boards();
         .role-option-card:hover {
             border-color: var(--text-primary);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            box-shadow: 3px 3px 0 0 var(--text-primary);
         }
         .role-option-card.selected {
-            border-color: var(--gradient-primary);
+            border-color: var(--text-primary);
+            box-shadow: 5px 5px 0 0 var(--text-primary);
+            transform: translateY(-2px);
+        }
+        .role-option-card.student.selected {
             background: rgba(124, 92, 255, 0.08);
-            box-shadow: 0 0 0 2px var(--gradient-primary);
+        }
+        .role-option-card.teacher.selected {
+            background: rgba(255, 93, 143, 0.08);
         }
         .role-card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
             display: grid;
             place-items: center;
             font-size: 24px;
-            margin-bottom: 12px;
-            border: 1.5px solid var(--text-primary);
+            margin-bottom: 14px;
+            border: 2px solid var(--text-primary);
+            box-shadow: 2.5px 2.5px 0 0 var(--text-primary);
+            transition: transform 0.2s ease;
         }
+        .role-option-card:hover .role-card-icon {
+            transform: scale(1.05);
+        }
+        /* Solid colors matching EduMate UI theme (no gradients) */
         .role-option-card.student .role-card-icon {
-            background: linear-gradient(135deg, #7c5cff, #2dd4bf);
-            color: #fff;
+            background: #7c5cff;
+            color: #ffffff;
         }
         .role-option-card.teacher .role-card-icon {
-            background: linear-gradient(135deg, #ff5d8f, #ffc83d);
-            color: #fff;
+            background: #ff5d8f;
+            color: #ffffff;
         }
         .role-title {
             font-size: 16px;
@@ -387,10 +400,10 @@ $boards = get_all_boards();
         }
         .student-custom-fields {
             margin-top: 16px;
-            padding: 16px;
+            padding: 18px;
             background: var(--bg-secondary);
-            border-radius: 14px;
-            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
         }
     </style>
 </head>
@@ -450,25 +463,41 @@ $boards = get_all_boards();
 
             <!-- Student specific fields -->
             <div class="student-custom-fields" id="studentFields" style="<?php echo ($preselectedRole === 'student') ? 'display: block;' : 'display: none;'; ?>">
-                <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary);">
-                    <i class="fas fa-sliders" style="margin-right: 6px; color: var(--gradient-primary);"></i> Student Details
+                <div style="font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-sliders" style="color: #7c5cff;"></i> Student Details
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                     <div>
                         <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">Class</label>
-                        <select name="class" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: inherit;">
-                            <?php for ($c = 5; $c <= 10; $c++): ?>
-                                <option value="<?php echo $c; ?>" <?php echo ($c === 10) ? 'selected' : ''; ?>>Class <?php echo $c; ?></option>
-                            <?php endfor; ?>
-                        </select>
+                        <div class="custom-select" data-name="class">
+                            <input type="hidden" name="class" id="class" value="10">
+                            <button type="button" class="custom-select__trigger" aria-haspopup="listbox">
+                                <i class="fas fa-layer-group field-icon"></i>
+                                <span class="custom-select__label">Class 10</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <ul class="custom-select__options" role="listbox">
+                                <?php for ($c = 5; $c <= 10; $c++): ?>
+                                    <li role="option" data-value="<?php echo $c; ?>" <?php echo ($c === 10) ? 'class="selected"' : ''; ?>>Class <?php echo $c; ?></li>
+                                <?php endfor; ?>
+                            </ul>
+                        </div>
                     </div>
                     <div>
                         <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">Board</label>
-                        <select name="board" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: inherit;">
-                            <?php foreach ($boards as $b): ?>
-                                <option value="<?php echo htmlspecialchars($b); ?>" <?php echo ($b === 'CBSE') ? 'selected' : ''; ?>><?php echo htmlspecialchars($b); ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="custom-select" data-name="board">
+                            <input type="hidden" name="board" id="board" value="CBSE">
+                            <button type="button" class="custom-select__trigger" aria-haspopup="listbox">
+                                <i class="fas fa-university field-icon"></i>
+                                <span class="custom-select__label">CBSE</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <ul class="custom-select__options" role="listbox">
+                                <?php foreach ($boards as $b): ?>
+                                    <li role="option" data-value="<?php echo htmlspecialchars($b); ?>" <?php echo ($b === 'CBSE') ? 'class="selected"' : ''; ?>><?php echo htmlspecialchars($b); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -488,6 +517,7 @@ $boards = get_all_boards();
             document.getElementById('btnRoleText').textContent = role.charAt(0).toUpperCase() + role.slice(1);
         }
     </script>
+    <script src="assets/js/custom-select.js"></script>
     <script src="assets/js/theme-toggle.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

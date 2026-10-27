@@ -184,16 +184,25 @@ render_dashboard_header('Profile', teacher_nav(), 'profile', ['Home', 'Profile']
     <section class="panel profile-card">
         <h2>Identity</h2>
         <div class="profile-card__top">
-            <div class="profile-card__avatar" style="
-                background: <?php echo htmlspecialchars($avatarBg, ENT_QUOTES); ?>;
-                width: 64px; height: 64px; border-radius: 50%;
-                display: flex; align-items: center; justify-content: center;
-                color: #fff; font-weight: 400; font-size: 22px; letter-spacing: 0.02em;
-                box-shadow: 0 0 0 1px rgba(126, 51, 255, 0.18), inset 0 0 0 1px rgba(255,255,255,0.22);
-                border: 1px solid rgba(126, 51, 255, 0.40);
-            ">
-                <?php echo htmlspecialchars($initials, ENT_QUOTES); ?>
-            </div>
+            <?php if (!empty($u['avatar'])): ?>
+                <img src="<?php echo htmlspecialchars($u['avatar'], ENT_QUOTES); ?>" alt="Profile Picture" class="profile-card__avatar" referrerpolicy="no-referrer" style="
+                    width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
+                    border: 2px solid var(--text-primary);
+                    box-shadow: 2.5px 2.5px 0 0 var(--text-primary);
+                    background: #fff;
+                ">
+            <?php else: ?>
+                <div class="profile-card__avatar" style="
+                    background: <?php echo htmlspecialchars($avatarBg, ENT_QUOTES); ?>;
+                    width: 64px; height: 64px; border-radius: 50%;
+                    display: flex; align-items: center; justify-content: center;
+                    color: #fff; font-weight: 400; font-size: 22px; letter-spacing: 0.02em;
+                    box-shadow: 0 0 0 1px rgba(126, 51, 255, 0.18), inset 0 0 0 1px rgba(255,255,255,0.22);
+                    border: 1px solid rgba(126, 51, 255, 0.40);
+                ">
+                    <?php echo htmlspecialchars($initials, ENT_QUOTES); ?>
+                </div>
+            <?php endif; ?>
             <div class="profile-card__header">
                 <div class="profile-card__name"><?php echo htmlspecialchars($u['full_name'], ENT_QUOTES); ?></div>
                 <div class="profile-card__meta">Teacher since <strong><?php echo htmlspecialchars(date('M j, Y', strtotime($u['created_at'])), ENT_QUOTES); ?></strong></div>

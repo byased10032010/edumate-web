@@ -197,6 +197,17 @@ function render_dashboard_header(
     [$c1, $c2] = user_avatar_gradient((int)$user['id']);
     $avatarBg = $c1;
     $initials = user_initials($user['full_name']);
+    $avatarUrl = $user['avatar'] ?? null;
+    if (empty($avatarUrl) && !empty($user['id'])) {
+        try {
+            $stmt = db()->prepare('SELECT avatar FROM users WHERE id = :id LIMIT 1');
+            $stmt->execute([':id' => $user['id']]);
+            $avatarUrl = $stmt->fetchColumn() ?: null;
+            if ($avatarUrl) {
+                $_SESSION['user']['avatar'] = $avatarUrl;
+            }
+        } catch (Throwable $e) {}
+    }
     $fullTitle = $title . ' · EduMate';
 
     // Build a friendly current path crumb
@@ -272,7 +283,11 @@ function render_dashboard_header(
 
     echo '    <div class="spacer"></div>', "\n";
     echo '    <a class="profile-chip" href="' . $base . 'profile.php" title="' . htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8') . '">', "\n";
-    echo '      <span class="avatar" style="background:' . $avatarBg . ';">' . htmlspecialchars($initials, ENT_QUOTES, 'UTF-8') . '</span>', "\n";
+    if (!empty($avatarUrl)) {
+        echo '      <span class="avatar" style="padding:0;overflow:hidden;border:2px solid var(--text-primary);box-shadow:2px 2px 0 0 var(--text-primary);background:#fff;"><img src="' . htmlspecialchars($avatarUrl, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8') . '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" referrerpolicy="no-referrer"></span>', "\n";
+    } else {
+        echo '      <span class="avatar" style="background:' . $avatarBg . ';">' . htmlspecialchars($initials, ENT_QUOTES, 'UTF-8') . '</span>', "\n";
+    }
     echo '      <span class="profile-details">', "\n";
     echo '        <span class="profile-name">' . htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8') . '</span>', "\n";
     echo '        <span class="profile-email">' . htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8') . '</span>', "\n";

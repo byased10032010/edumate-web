@@ -129,11 +129,22 @@ function login_user(array $user, bool $remember = false): void
 {
     // Regenerate session ID to prevent fixation
     session_regenerate_id(true);
+
+    $avatar = $user['avatar'] ?? null;
+    if ($avatar === null && !empty($user['id'])) {
+        try {
+            $stmt = db()->prepare('SELECT avatar FROM users WHERE id = :id LIMIT 1');
+            $stmt->execute([':id' => $user['id']]);
+            $avatar = $stmt->fetchColumn() ?: null;
+        } catch (Throwable $e) {}
+    }
+
     $_SESSION['user'] = [
         'id'        => (int)$user['id'],
         'full_name' => $user['full_name'],
         'email'     => $user['email'],
         'role'      => $user['role'],
+        'avatar'    => $avatar,
     ];
 
     // Update last_login
